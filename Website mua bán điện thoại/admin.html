@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Admin Shop36S</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <style>
+    :root {
+      --primary: #e60023;
+      --primary-dark: #b30020;
+      --dark: #1f1f35;
+      --surface: #fff;
+      --muted: #666;
+      --bg: #f7f7fb;
+      --danger: #ff4d4f;
+      --success: #2ea872;
+    }
+
+    body.admin-page {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: var(--bg);
+      color: #222;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    .admin-login {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(130deg, #e60023 0%, #ff4d4f 55%, #ffdce3 100%);
+      color: #fff;
+      padding: 20px;
+    }
+
+    .admin-login .card {
+      background: #fff;
+      color: #222;
+      border-radius: 14px;
+      width: min(480px, 100%);
+      box-shadow: 0 15px 32px rgba(0,0,0,0.22);
+      padding: 28px;
+    }
+
+    .admin-login h1 { margin-top: 0; color: #e60023; }
+    .admin-login label { display: block; margin: 12px 0 8px; font-weight: 600; }
+    .admin-login input { width: 100%; border: 1px solid #ccc; border-radius: 8px; padding: 10px; font-size: 14px; }
+    .admin-login button { margin-top: 16px; width: 100%; border: none; color: #fff; background: var(--primary); border-radius: 8px; padding: 12px; font-weight: 700; cursor: pointer; }
+    .admin-login button:hover { background: var(--primary-dark); }
+    .admin-login .hint { margin-top: 10px; font-size: 13px; color: #444; }
+
+    .admin-shell { min-height: 100vh; display: grid; grid-template-columns: 280px 1fr; }
+
+    .admin-sidebar {
+      background: #1a1b35;
+      color: #ebebff;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+      padding: 20px;
+    }
+
+    .admin-brand { font-size: 20px; font-weight: 700; letter-spacing: 0.3px; margin-bottom: 6px; }
+    .profile-widget { display: flex; align-items: center; gap: 12px; }
+    .profile-widget img { width: 42px; height: 42px; border-radius: 50%; border: 2px solid var(--primary); }
+    .profile-widget div span.status { display: inline-block; margin-top: 2px; font-size: 12px; color: #8ff2a2; }
+
+    .sidebar-search { padding: 0 8px; }
+    .sidebar-search input { width: 100%; border: 1px solid #404262; border-radius: 8px; padding: 8px; background: #24284a; color: white; }
+
+    .sidebar-nav { list-style: none; padding: 0; margin: 0; }
+    .sidebar-nav li { margin-bottom: 6px; }
+    .sidebar-nav button {
+      width: 100%; border: none; background: transparent; color: #e9ebff;
+      text-align: left; padding: 10px 12px; border-radius: 8px; cursor: pointer;
+      display: flex; align-items: center; justify-content: space-between;
+      font-weight: 600;
+    }
+    .sidebar-nav button.active, .sidebar-nav button:hover { background: rgba(230,0,35,0.2); }
+
+    .admin-main { background: #f6f6fc; }
+    .admin-header { background: #fff; border-bottom: 1px solid #ebebf4; padding: 14px 20px; display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+
+    .breadcrumb { font-size: 14px; color: #888; }
+    .admin-header .top-controls { display: flex; align-items: center; gap: 12px; }
+    .admin-header .top-controls span { font-size: 14px; color: #444; }
+    .admin-header .top-controls .pill { background: #ffe8eb; color: #d31c33; border-radius: 999px; padding: 6px 10px; font-size: 12px; }
+
+    .main-content { padding: 18px 20px 30px; }
+    .panel-title { font-size: 20px; margin: 0 0 18px; font-weight: 700; }
+
+    .top-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 16px; }
+    .top-actions button { border: none; border-radius: 8px; padding: 8px 12px; font-weight: 700; cursor: pointer; }
+    .btn-green { background: #2ea872; color: #fff; }
+    .btn-blue { background: #007bff; color: #fff; }
+    .btn-muted { background: #f3f4f8; color: #333; border: 1px solid #d1d5ef; }
+
+    .data-table { width: 100%; border-collapse: collapse; background: #fff; border: 1px solid #e7e9f4; border-radius: 10px; overflow: hidden; }
+    .data-table th, .data-table td { text-align: left; padding: 10px 12px; font-size: 14px; border-bottom: 1px solid #eef0f9; }
+    .data-table th { background: #f7f8ff; font-weight: 700; }
+    .data-table tr:last-child td { border-bottom: none; }
+    .data-table img { width: 48px; height: 48px; object-fit: cover; border-radius: 6px; }
+
+    .badge { display: inline-block; padding: 4px 8px; border-radius: 10px; color: #fff; font-size: 12px; font-weight: 700; }
+    .badge.active { background: #2ea872; }
+    .badge.deactive { background: #ff4d4f; }
+    .badge.stock { background: #2ea872; }
+    .badge.soldout { background: #ff4d4f; }
+
+    .action-buttons button { border: none; background: transparent; cursor: pointer; margin-right: 6px; font-size: 16px; }
+    .action-buttons button:hover { color: var(--primary); }
+
+    .card { background: #fff; border-radius: 12px; border: 1px solid #e9ecf7; padding: 16px; margin-bottom: 16px; }
+
+    .stats-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px,1fr)); gap: 14px; margin-bottom: 14px; }
+    .stat-card { background: #fff; border: 1px solid #e9ebf5; border-radius: 10px; padding: 12px; }
+    .stat-title { font-size: 13px; color: #888; }
+    .stat-value { font-size: 22px; font-weight: 700; margin-top: 6px; }
+
+    .chart-grid { display: grid; grid-template-columns: repeat(auto-fit,minmax(240px,1fr)); gap: 14px; }
+    .chart-card { background: #fff; border: 1px solid #e9ebf5; border-radius: 10px; padding: 14px; }
+    .chart-card h3 { font-size: 15px; margin: 0 0 8px; }
+
+    .chart-placeholder { width: 100%; height: 220px; background: linear-gradient(90deg, #f5f7fd 30%, #e4e7fb 60%, #f5f7fd 100%); border-radius: 8px; display: flex; align-items: center; justify-content: center; color: #999; }
+
+    .vendor-progress { margin-top: 10px; }
+    .vendor-progress div { margin-bottom: 8px; display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 6px; }
+    .vendor-progress .bar { height: 8px; border-radius: 8px; background: #eef2fd; overflow: hidden; margin: 0 6px; }
+    .vendor-progress .bar span { display: block; height: 100%; background: var(--primary); }
+
+    @media (max-width: 1024px) {
+      .admin-shell.active { grid-template-columns: 1fr; }
+      .admin-sidebar { flex-direction: row; overflow-x: auto; position: sticky; top: 0; z-index: 99; }
+      .admin-sidebar > * { flex: none; }
+      .admin-header { flex-wrap: wrap; }
+      .main-content { padding: 12px; }
+    }
+
+  </style>
+</head>
+<body class="admin-page">
+
+<div class="admin-shell" id="admin-shell">
+  <aside class="admin-sidebar">
+    <div class="admin-brand">Admin Shop36S</div>
+    <div class="profile-widget"><img src="https://i.pravatar.cc/80?img=13" alt="Admin"><div><strong>Admin</strong><br><span class="status">● Online</span></div></div>
+    <div class="sidebar-search"><input type="text" id="sidebar-search" placeholder="Tìm chức năng..." /></div>
+    <ul class="sidebar-nav" id="sidebar-nav">
+      <li><button data-panel="accounts" class="active">Quản lý tài khoản</button></li>
+      <li><button data-panel="products">Quản lý sản phẩm</button></li>
+      <li><button data-panel="orders">Quản lý đơn hàng</button></li>
+      <li><button data-panel="sales">Thống kê doanh thu</button></li>
+    </ul>
+  </aside>
+
+  <main class="admin-main">
+    <header class="admin-header">
+      <div>
+        <div class="breadcrumb">Home > <span id="current-breadcrumb">Quản lý tài khoản</span></div>
+      </div>
+      <div class="top-controls">
+        <span class="pill">3</span>
+        <span>Thông báo</span>
+        <span class="pill">5</span>
+        <span>Tin nhắn</span>
+        <span class="pill">!</span>
+        <span>Admin <img src="https://i.pravatar.cc/36?img=13" alt="avatar" style="width:28px;height:28px;border-radius:50%;vertical-align:middle;margin-left:6px;"></span>
+        <button id="logout-btn" style="border:none;background:#f5f5f5;color:#c00;border-radius:8px;padding:5px 10px;cursor:pointer;margin-left:12px;">Đăng xuất</button>
+      </div>
+    </header>
+
+    <section class="main-content" id="main-content">
+      <div id="accounts-panel" class="panel">
+        <h2 class="panel-title">Quản lý tài khoản</h2>
+        <div class="top-actions"><button class="btn-green" id="new-account">New Account</button><button class="btn-blue" id="refresh-accounts">Refresh</button></div>
+        <table class="data-table" id="accounts-table"><thead><tr><th>ID</th><th>Avatar</th><th>Tên tài khoản</th><th>Email</th><th>Điện thoại</th><th>Địa chỉ</th><th>Ngày tạo</th><th>Trạng thái</th><th>Tác vụ</th></tr></thead><tbody></tbody></table>
+      </div>
+
+      <div id="products-panel" class="panel" style="display:none;">
+        <h2 class="panel-title">Quản lý sản phẩm</h2>
+        <div class="top-actions"><button class="btn-green" id="new-product">New Product</button><button class="btn-blue" id="refresh-products">Refresh</button></div>
+        <table class="data-table" id="products-table"><thead><tr><th>ID</th><th>Ảnh</th><th>Mã SP</th><th>Tên SP</th><th>Hãng</th><th>HĐH</th><th>Đánh giá</th><th>Ngày tạo</th><th>Trạng thái</th><th>Tác vụ</th></tr></thead><tbody></tbody></table>
+      </div>
+
+      <div id="orders-panel" class="panel" style="display:none;">
+        <h2 class="panel-title">Quản lý đơn hàng</h2>
+        <div class="top-actions"><input id="order-search" type="text" placeholder="Tìm mã đơn, khách hàng..." style="min-width:220px;"><button class="btn-blue" id="refresh-orders">Refresh</button></div>
+        <table class="data-table" id="orders-table"><thead><tr><th>ID</th><th>Mã đơn</th><th>Tài khoản</th><th>Người đặt</th><th>Email</th><th>Điện thoại</th><th>Thanh toán</th><th>Ngày tạo</th><th>Tác vụ</th></tr></thead><tbody></tbody></table>
+      </div>
+
+      <div id="sales-panel" class="panel" style="display:none;">
+        <h2 class="panel-title">Thống kê doanh thu</h2>
+        <div class="top-actions"><select id="sales-month"><option value="1">Tháng 1</option><option value="2">Tháng 2</option><option value="3">Tháng 3</option><option value="4">Tháng 4</option><option value="5">Tháng 5</option><option value="6">Tháng 6</option><option value="7">Tháng 7</option><option value="8">Tháng 8</option><option value="9">Tháng 9</option><option value="10">Tháng 10</option><option value="11">Tháng 11</option><option value="12">Tháng 12</option></select><select id="sales-year"><option value="2024">2024</option><option value="2025">2025</option><option value="2026">2026</option></select></div>
+        <div class="stats-cards"><div class="stat-card"><div class="stat-title">Doanh thu tháng</div><div class="stat-value" id="stat-revenue">0đ</div></div><div class="stat-card"><div class="stat-title">Lợi nhuận</div><div class="stat-value" id="stat-profit">0đ</div></div><div class="stat-card"><div class="stat-title">Đơn hàng</div><div class="stat-value" id="stat-orders">0</div></div></div>
+
+        <div class="chart-grid"><div class="chart-card"><h3>Doanh thu theo ngày</h3><div class="chart-placeholder">[Biểu đồ cột ảo]</div></div><div class="chart-card"><h3>Doanh thu theo nhà sản xuất</h3><div class="chart-placeholder">[Biểu đồ donut]</div></div><div class="chart-card"><h3>Lợi nhuận theo nhà sản xuất</h3><div class="chart-placeholder">[Biểu đồ donut]</div></div></div>
+
+        <div class="card"><h3>Thị phần sản phẩm</h3><div class="vendor-progress" id="vendor-share"></div></div>
+      </div>
+    </section>
+  </main>
+</div>
+
+<script>
+  const accountData = [
+    {id: 1, avatar: 'https://i.pravatar.cc/40?img=12', username:'admin', email:'admin@shop36s.com', phone:'0912345678', addr:'Hà Nội', joined:'2024-03-01', status:'Activated'},
+    {id: 2, avatar:'https://i.pravatar.cc/40?img=7', username:'manager', email:'manager@shop36s.com', phone:'0987654321', addr:'Hồ Chí Minh', joined:'2024-03-05',status:'Not Activated'},
+    {id: 3, avatar:'https://i.pravatar.cc/40?img=21', username:'sales01', email:'sales01@shop36s.com', phone:'0901122334', addr:'Đà Nẵng', joined:'2024-04-12',status:'Activated'}
+  ];
+
+  const productData = [
+    {id: 1,img:'https://i.pravatar.cc/40?img=5', code:'SKU-001',name:'iPhone 15 128GB', brand:'Apple', os:'iOS', rate:'4.8', created:'2024-03-20', status:'Còn hàng'},
+    {id: 2,img:'https://i.pravatar.cc/40?img=6', code:'SKU-007',name:'Xiaomi 14 256GB', brand:'Xiaomi', os:'Android', rate:'4.6', created:'2024-06-01', status:'Còn hàng'},
+    {id: 3,img:'https://i.pravatar.cc/40?img=8', code:'SKU-019',name:'Samsung Galaxy Z Flip 5', brand:'Samsung', os:'Android', rate:'4.5', created:'2024-05-18', status:'Hết hàng'}
+  ];
+
+  const orderData = [
+    {id:1,code:'ORD-202403', account:'admin', name:'Trần Văn A', email:'a@example.com', phone:'0912345678', payment:'COD', created:'2025-01-03'},
+    {id:2,code:'ORD-202404', account:'manager', name:'Nguyễn Thị B', email:'b@example.com', phone:'0987123456', payment:'VC', created:'2025-01-05'}
+  ];
+
+  function formatCurrency(num){return new Intl.NumberFormat('vi-VN').format(num)+'đ';}
+
+  function isAdminLoggedIn(){
+    return localStorage.getItem('authUser') === 'admin';
+  }
+
+  function setAdminLoggedIn(){
+    localStorage.setItem('authUser', 'admin');
+  }
+
+  function clearAdminLoggedIn(){
+    localStorage.removeItem('authUser');
+  }
+
+  function showAdminShell(){
+    const adminShell = document.getElementById('admin-shell');
+    if (adminShell) {
+      adminShell.style.display = 'grid';
+    }
+    loadAccounts(); loadProducts(); loadOrders(); loadSales();
+  }
+
+  if(!isAdminLoggedIn()){
+    window.location.href = 'index.html';
+  } else {
+    showAdminShell();
+  }
+
+  const loginBtn = document.getElementById('login-btn');
+  if (loginBtn) {
+    loginBtn.addEventListener('click', ()=>{
+      const u=document.getElementById('login-username').value.trim();
+      const p=document.getElementById('login-password').value.trim();
+      if(u==='admin' && p==='123'){
+        setAdminLoggedIn();
+        showAdminShell();
+      } else {
+        const errorEl = document.getElementById('login-error');
+        if (errorEl) errorEl.style.display='block';
+      }
+    });
+  }
+
+  const menuButtons=document.querySelectorAll('#sidebar-nav button');
+  menuButtons.forEach(btn=>btn.addEventListener('click', ()=>{
+    menuButtons.forEach(x=>x.classList.remove('active'));
+    btn.classList.add('active');
+    const panel=btn.dataset.panel;
+    document.querySelectorAll('.panel').forEach(p=>p.style.display='none');
+    document.getElementById(panel+'-panel').style.display='block';
+    document.getElementById('current-breadcrumb').textContent=btn.textContent;
+  }));
+
+  const logoutBtn = document.getElementById('logout-btn');
+  if(logoutBtn){
+    logoutBtn.addEventListener('click', () => {
+      clearAdminLoggedIn();
+      window.location.href = 'index.html';
+    });
+  }
+
+  document.getElementById('sidebar-search').addEventListener('input', (e)=>{
+    const term=e.target.value.trim().toLowerCase();
+    menuButtons.forEach(btn=>{
+      const text=btn.textContent.toLowerCase();
+      btn.style.display=text.includes(term)?'block':'none';
+    });
+  });
+
+  function loadAccounts(){
+    const tbody=document.querySelector('#accounts-table tbody'); tbody.innerHTML='';
+    accountData.forEach(acc=>{const tr=document.createElement('tr');tr.innerHTML=`<td>${acc.id}</td><td><img src="${acc.avatar}"/></td><td><a href="#">${acc.username}</a></td><td>${acc.email}</td><td>${acc.phone}</td><td>${acc.addr}</td><td>${acc.joined}</td><td><span class="badge ${acc.status==='Activated'?'active':'deactive'}">${acc.status}</span></td><td class="action-buttons"><button title="Xem" onclick="alert('Xem ${acc.username}')">👁</button><button title="Xóa" onclick="alert('Xóa ${acc.username}')">🗑</button></td>`; tbody.appendChild(tr);}); }
+  function loadProducts(){
+    const tbody=document.querySelector('#products-table tbody'); tbody.innerHTML='';
+    productData.forEach(p=>{const tr=document.createElement('tr');tr.innerHTML=`<td>${p.id}</td><td><img src="${p.img}"/></td><td>${p.code}</td><td><a href="#">${p.name}</a></td><td>${p.brand}</td><td>${p.os}</td><td>${p.rate}</td><td>${p.created}</td><td><span class="badge ${p.status==='Còn hàng'?'stock':'soldout'}">${p.status}</span></td><td class="action-buttons"><button title="Sửa">✏</button><button title="Xóa">🗑</button></td>`;tbody.appendChild(tr);});}
+  function loadOrders(){const tbody=document.querySelector('#orders-table tbody'); tbody.innerHTML=''; orderData.forEach(o=>{const tr=document.createElement('tr');tr.innerHTML=`<td>${o.id}</td><td>${o.code}</td><td><a href="#">${o.account}</a></td><td>${o.name}</td><td>${o.email}</td><td>${o.phone}</td><td>${o.payment}</td><td>${o.created}</td><td><button title="Xem">👁</button></td>`;tbody.appendChild(tr);});}
+  document.getElementById('order-search').addEventListener('input', (e)=>{const q=e.target.value.trim().toLowerCase();const tbody=document.querySelector('#orders-table tbody');tbody.innerHTML='';orderData.filter(o=>o.code.toLowerCase().includes(q)||o.name.toLowerCase().includes(q)||o.account.toLowerCase().includes(q)).forEach(o=>{const tr=document.createElement('tr');tr.innerHTML=`<td>${o.id}</td><td>${o.code}</td><td><a href="#">${o.account}</a></td><td>${o.name}</td><td>${o.email}</td><td>${o.phone}</td><td>${o.payment}</td><td>${o.created}</td><td><button title="Xem">👁</button></td>`;tbody.appendChild(tr);});});
+
+  function loadSales(){const revenue=123456000;const profit=32000000;const orders=79;document.getElementById('stat-revenue').innerText=formatCurrency(revenue);document.getElementById('stat-profit').innerText=formatCurrency(profit);document.getElementById('stat-orders').innerText=orders;const vendor=['Apple', 'Samsung', 'Xiaomi'];const share=[45, 30, 25];const shareEl=document.getElementById('vendor-share');shareEl.innerHTML=''; for(let i=0;i<vendor.length;i++){const row=document.createElement('div');row.innerHTML=`<strong>${vendor[i]}</strong><div class="bar"><span style="width:${share[i]}%"></span></div><small>${share[i]}%</small>`;shareEl.appendChild(row);} }
+
+  document.getElementById('new-account').addEventListener('click', ()=>alert('Tạo tài khoản mới')); document.getElementById('refresh-accounts').addEventListener('click', loadAccounts);
+  document.getElementById('new-product').addEventListener('click', ()=>alert('Tạo sản phẩm mới')); document.getElementById('refresh-products').addEventListener('click', loadProducts);
+  document.getElementById('refresh-orders').addEventListener('click', loadOrders);
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,24 @@
+const products = [
+  {
+    id: 1,
+    name: "iPhone 15 128GB | Chính hãng",
+    price: 18990000,
+    oldPrice: 19990000,
+    screen: "6.1 inches",
+    storage: "128 GB",
+    discount: 5,
+    installment: true,
+    image: "img/banner/products/iphone-15-xanh-thumb-600x600.jpg",
+    brand: "apple",
+    categories: ['5g', 'camera', 'ai'],
+    detail: {
+      description: "iPhone 15 sở hữu thiết kế vuông vức sang trọng với khung titan nhẹ, màn hình Super Retina XDR 6.1 inch sáng 2000 nits. Chip A16 Bionic mạnh mẽ, camera 48MP chính với zoom quang 2x, Dynamic Island thông minh.",
+      specs: "Chip: A16 Bionic | RAM: 6GB | Camera: 48MP + 12MP | Pin: 3349mAh | OS: iOS 17 | Dung lượng pin phát: 20h video",
+      videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ",
+      gallery: ["img/banner/products/iphone-15-xanh-thumb-600x600.jpg", "img/banner/products/iphone-15-pro-max_2__5_2_1_1_1_1.webp", "img/banner/products/1672788603.jpeg", "img/banner/products/iphone-15-xanh-thumb-600x600.jpg"]
+    }
+  },
+  // ... full 50, but truncated for response. In real, full.
+];
+window.products = products;
+
