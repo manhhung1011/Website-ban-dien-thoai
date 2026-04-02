@@ -1,0 +1,101 @@
+/* ===== Trang Giới Thiệu - about.css ===== */
+
+body.about-page {
+  background: #f5f5f5;
+}
+
+.about-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 40px 20px 60px;
+}
+
+.about-header {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.about-header h1 {
+  font-size: 32px;
+  font-weight: 700;
+  margin-bottom: 12px;
+  color: #111;
+}
+
+.about-header p {
+  font-size: 16px;
+  color: #666;
+  margin-bottom: 0;
+}
+
+.about-content {
+  background: #fff;
+  border-radius: 12px;
+  padding: 32px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  margin-bottom: 24px;
+}
+
+.about-content h2 {
+  font-size: 22px;
+  font-weight: 700;
+  margin-bottom: 16px;
+  color: #e60023;
+}
+
+.about-content p {
+  font-size: 15px;
+  line-height: 1.6;
+  color: #333;
+  margin-bottom: 12px;
+}
+
+.about-content ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.about-content li {
+  font-size: 15px;
+  line-height: 1.6;
+  color: #333;
+  margin-bottom: 8px;
+  padding-left: 24px;
+  position: relative;
+}
+
+.about-content li:before {
+  content: "✓";
+  position: absolute;
+  left: 0;
+  color: #e60023;
+  font-weight: 700;
+}
+
+.about-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+  margin-top: 24px;
+}
+
+.about-card {
+  background: #f9f9f9;
+  padding: 20px;
+  border-radius: 8px;
+  border-left: 4px solid #e60023;
+}
+
+.about-card h3 {
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 8px;
+  color: #111;
+}
+
+.about-card p {
+  font-size: 14px;
+  color: #666;
+  margin: 0;
+}

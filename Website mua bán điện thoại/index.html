@@ -251,102 +251,25 @@
     </div>
   </div>
 
+  <!-- Data -->
   <script src="data/product.js"></script>
-  <script src="js/script.js"></script>
+  
+  <!-- Services -->
+  <script src="js/services/taskService.js"></script>
+  <script src="js/services/authService.js"></script>
+  <script src="js/services/cartService.js"></script>
+  <script src="js/services/uiService.js"></script>
+  <script src="js/services/productService.js"></script>
+  
+  <!-- Modules -->
+  <script src="js/modules/filterModule.js"></script>
+  <script src="js/modules/bannerCarousel.js"></script>
+  
+  <!-- Main App -->
+  <script src="js/main.js"></script>
 
-  <!-- Banner Carousel Script -->
-  <script>
-    class BannerCarousel {
-      constructor(carouselId) {
-        this.carouselEl = document.getElementById(carouselId);
-        this.track = document.getElementById(`carousel-track-${carouselId.split('-')[2]}`);
-        this.prevBtn = document.getElementById(`carousel-prev-${carouselId.split('-')[2]}`);
-        this.nextBtn = document.getElementById(`carousel-next-${carouselId.split('-')[2]}`);
-        this.dotsContainer = document.getElementById(`carousel-dots-${carouselId.split('-')[2]}`);
-        
-        this.currentIndex = 0;
-        this.autoPlayInterval = null;
-        this.autoPlayDelay = 5000; // 5 giây
-        
-        if (this.track) {
-          this.slides = this.track.querySelectorAll('.carousel-slide');
-          this.init();
-        }
-      }
-
-      init() {
-        this.renderDots();
-        this.attachEvents();
-        this.startAutoPlay();
-      }
-
-      renderDots() {
-        this.dotsContainer.innerHTML = '';
-        this.slides.forEach((_, index) => {
-          const dot = document.createElement('div');
-          dot.className = 'carousel-dot' + (index === 0 ? ' active' : '');
-          dot.addEventListener('click', () => this.goToSlide(index));
-          this.dotsContainer.appendChild(dot);
-        });
-      }
-
-      updateDots() {
-        this.dotsContainer.querySelectorAll('.carousel-dot').forEach((dot, index) => {
-          dot.classList.toggle('active', index === this.currentIndex);
-        });
-      }
-
-      goToSlide(index) {
-        this.currentIndex = index;
-        this.updateTrack();
-        this.updateDots();
-        this.resetAutoPlay();
-      }
-
-      nextSlide() {
-        this.currentIndex = (this.currentIndex + 1) % this.slides.length;
-        this.updateTrack();
-        this.updateDots();
-        this.resetAutoPlay();
-      }
-
-      prevSlide() {
-        this.currentIndex = (this.currentIndex - 1 + this.slides.length) % this.slides.length;
-        this.updateTrack();
-        this.updateDots();
-        this.resetAutoPlay();
-      }
-
-      updateTrack() {
-        const offset = -this.currentIndex * 100;
-        this.track.style.transform = `translateX(${offset}%)`;
-      }
-
-      startAutoPlay() {
-        this.autoPlayInterval = setInterval(() => this.nextSlide(), this.autoPlayDelay);
-      }
-
-      resetAutoPlay() {
-        clearInterval(this.autoPlayInterval);
-        this.startAutoPlay();
-      }
-
-      attachEvents() {
-        this.prevBtn?.addEventListener('click', () => this.prevSlide());
-        this.nextBtn?.addEventListener('click', () => this.nextSlide());
-        
-        // Dừng autoplay khi hover
-        this.carouselEl?.addEventListener('mouseenter', () => clearInterval(this.autoPlayInterval));
-        this.carouselEl?.addEventListener('mouseleave', () => this.startAutoPlay());
-      }
-    }
-
-    // Khởi tạo carousel cho cả 2 bên
-    document.addEventListener('DOMContentLoaded', () => {
-      new BannerCarousel('banner-carousel-left');
-      new BannerCarousel('banner-carousel-right');
-    });
-  </script>
+  <!-- Page Script -->
+  <script src="js/pages/index.js"></script>
 <footer class="main-footer">
   <div class="container footer-flex">
     <div class="footer-col">
