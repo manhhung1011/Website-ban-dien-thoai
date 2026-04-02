@@ -4,8 +4,6 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Chi tiết sản phẩm</title>
-
-  <!-- CSS giống trang chủ -->
   <link rel="stylesheet" href="css/style.css" />
   <link rel="stylesheet" href="css/footer.css" />
 
@@ -164,9 +162,11 @@
     .pd-bottom-name { font-weight: 600; margin-bottom: 2px; }
     .pd-bottom-price { font-weight: 700; color: #e60023; font-size: 16px; }
     .pd-bottom-bar button { padding: 12px 20px; border: none; border-radius: 12px; font-weight: 700; cursor: pointer; transition: all 0.2s; flex-shrink: 0; }
-    .pd-buy-btn { background: #e60023; color: white; font-size: 15px; }
+    .pd-buy-btn { background: #e60023; color: white; font-size: 14px; min-width: 130px; height: 40px; padding: 0 14px; }
     .pd-buy-btn:hover { background: #b30000; }
     .pd-cart-btn { background: white; color: #e60023; border: 2px solid #e60023; width: 52px; height: 52px; font-size: 20px; }
+
+    .pd-add-cart-box .pd-buy-btn { min-width: 100px; width: auto; }
 
     @media (max-width: 1024px) { .pd-main { grid-template-columns: 1fr; } }
     @media (max-width: 768px) { 
@@ -182,7 +182,7 @@
   </style>
 </head>
 
-<body class="product-detail-page">
+<body class="product-detail-page" style="background: #ffffff !important;">
 
   <!-- Thanh thông tin trên cùng (y hệt trang chủ) -->
   <div class="top-info-bar">
@@ -205,7 +205,7 @@
       <div class="header-left">
         <!-- Logo: dùng <a> để click về trang chủ (chuẩn, không cần JS) -->
         <a href="index.html" class="logo" aria-label="Về trang chủ">
-          Shop36<span class="highlight">S</span>
+          <span class="logo-text">Shop<span class="logo-number">36</span></span>
         </a>
       </div>
 
@@ -247,6 +247,28 @@
           <button id="logout-action" type="button">Đăng xuất</button>
         </div>
       </div>
+    </div>
+
+    <!-- Navigation Menu -->
+    <div class="container">
+      <nav class="nav-menu">
+        <a href="index.html">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
+          Trang Chủ
+        </a>
+        <a href="about.html">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg>
+          Giới Thiệu
+        </a>
+        <a href="news.html">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M5 3c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2H5zm0 2h14v10H5V5zm2 11h10v2H7z"/></svg>
+          Tin Tức
+        </a>
+        <a href="contact.html">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.01 15.38c-1.23 0-2.42-.2-3.53-.56-.35-.12-.74-.03-1.01.24l-1.57 1.97c-2.83-1.35-5.48-3.9-6.89-6.83l1.95-1.66c.27-.28.35-.67.24-1.02-.37-1.11-.56-2.3-.56-3.53 0-.54-.45-.99-.99-.99H4.19C3.65 3 3 3.24 3 3.99 3 13.28 10.73 21 20.01 21c.71 0 .99-.63.99-1.18v-3.45c0-.54-.45-.99-.99-.99z"/></svg>
+          Liên Hệ
+        </a>
+      </nav>
     </div>
   </header>
 
@@ -401,6 +423,7 @@
 
           <div class="pd-add-cart-box">
             <button type="button" class="pd-add-cart-btn" onclick="window.addToCart(${product.id})" aria-label="Thêm vào giỏ hàng">🛒 Thêm vào giỏ hàng</button>
+            <button type="button" class="pd-buy-btn" onclick="window.buyNow(${product.id})">Mua ngay</button>
           </div>
 
           <div class="pd-options">
@@ -461,7 +484,7 @@
           <div class="pd-bottom-price">${formatCurrency(product.price)}</div>
         </div>
         <button type="button" class="pd-cart-btn" onclick="window.addToCart(${product.id})">🛒</button>
-        <button type="button" class="pd-buy-btn" onclick="alert('Chuyển đến thanh toán')">Mua ngay</button>
+        <button type="button" class="pd-buy-btn" onclick="window.buyNow(${product.id})">Mua ngay</button>
       `;
       document.body.appendChild(pdBottom);
 
@@ -558,6 +581,9 @@
         const key = normalizeColorName(color);
         thumbImages = colorThumbnailsMap[key] || defaultThumbnails;
         currentColor = color;
+        
+        // Lưu màu sắc được chọn vào global window object để addToCart có thể sử dụng
+        window.selectedProductColor = color;
 
         if (pdTitleEl) {
           pdTitleEl.textContent = `${product.name} màu ${color} | Chính hãng`;
@@ -609,6 +635,7 @@
       });
 
       // Khởi tạo gallery lần đầu
+      window.selectedProductColor = currentColor;
       renderThumbnails();
     });
   </script>

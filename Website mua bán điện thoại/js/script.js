@@ -1,7 +1,7 @@
 // js/script.js
 
 // Giỏ hàng toàn cục (truy cập được từ cả index và product-detail)
-let cartCount = parseInt(localStorage.getItem('cartCount') || '0', 10) || 0;
+window.cartCount = parseInt(localStorage.getItem('cartCount') || '0', 10) || 0;
 
 function getCartItems() {
   const items = localStorage.getItem('cartItems');
@@ -15,9 +15,9 @@ function setCartItems(items) {
 function updateCartCountDisplay() {
   const cartCountEl = document.getElementById('cart-count');
   if (cartCountEl) {
-    cartCountEl.textContent = cartCount;
+    cartCountEl.textContent = window.cartCount;
   }
-  localStorage.setItem('cartCount', cartCount);
+  localStorage.setItem('cartCount', window.cartCount);
 }
 
 function showToast(message, duration = 2200) {
@@ -42,32 +42,102 @@ function showToast(message, duration = 2200) {
 }
 
 window.addToCart = function (productId) {
-  cartCount += 1;
+  if (!getAuthUser()) {
+    showToast('Bạn cần đăng nhập để thực hiện thao tác');
+    return;
+  }
+  window.cartCount += 1;
   updateCartCountDisplay();
   const product = window.products?.find((p) => p.id === productId);
   
   const items = getCartItems();
-  const existingItem = items.find(item => item.id === productId);
+  const selectedColor = window.selectedProductColor || 'Trắng';
+  const uniqueKey = `${productId}_${selectedColor}`;
+  const existingItem = items.find(item => item.uniqueKey === uniqueKey);
+  
+  // Get image by color
+  let productImage = product?.image || '';
+  if (product?.detail?.colorThumbnails) {
+    const colorThumbnails = product.detail.colorThumbnails;
+    // Find matching color (case-insensitive)
+    for (const [colorName, imageList] of Object.entries(colorThumbnails)) {
+      if (colorName === selectedColor || colorName.toLowerCase() === selectedColor.toLowerCase()) {
+        if (Array.isArray(imageList) && imageList.length > 0) {
+          productImage = imageList[0];
+          break;
+        }
+      }
+    }
+  }
   
   if (existingItem) {
     existingItem.qty += 1;
   } else {
     items.push({
       id: productId,
+      uniqueKey: uniqueKey,
       name: product?.name || 'Sản phẩm',
+      color: selectedColor,
       price: product?.price || 0,
       oldPrice: product?.oldPrice || 0,
-      image: product?.image || '',
+      image: productImage,
       qty: 1
     });
   }
   
   setCartItems(items);
   const name = product ? product.name : 'Sản phẩm';
-  showToast(`Thêm vào giỏ hàng thành công – ${name}`);
+  showToast(`Thêm vào giỏ hàng thành công – ${name} (${selectedColor})`);
+}
+
+window.buyNow = function (productId) {
+  if (!getAuthUser()) {
+    showToast('Bạn cần đăng nhập để thực hiện thao tác');
+    return;
+  }
+  // Logic mua ngay ở đây, ví dụ chuyển đến trang thanh toán
+  alert('Chuyển đến thanh toán');
 };
 
 updateCartCountDisplay();
+
+function getAuthUser() {
+  return localStorage.getItem('authUser');
+}
+
+function setAuthUser(name) {
+  localStorage.setItem('authUser', name);
+  updateAuthUI();
+}
+
+function clearAuthUser() {
+  localStorage.removeItem('authUser');
+  updateAuthUI();
+}
+
+function updateAuthUI() {
+  const userNameEl = document.getElementById('user-name');
+  const userMenu = document.getElementById('user-menu');
+  const name = getAuthUser() || 'Tài khoản';
+
+  if (userNameEl) {
+    userNameEl.textContent = name;
+  }
+  if (!userMenu) {
+    return;
+  }
+
+  const loginAction = userMenu.querySelector('#login-action');
+  const logoutAction = userMenu.querySelector('#logout-action');
+
+  if (getAuthUser()) {
+    if (loginAction) loginAction.hidden = true;
+    if (logoutAction) logoutAction.hidden = false;
+  } else {
+    if (loginAction) loginAction.hidden = false;
+    if (logoutAction) logoutAction.hidden = true;
+  }
+}
 
 document.addEventListener('DOMContentLoaded', () => {
   const userBtn = document.getElementById('user-btn');
@@ -80,41 +150,6 @@ document.addEventListener('DOMContentLoaded', () => {
   const authRegister = document.getElementById('auth-register');
   const authGoogleBtn = document.getElementById('auth-google-btn');
   const authZaloBtn = document.getElementById('auth-zalo-btn');
-
-  function getAuthUser() {
-    return localStorage.getItem('authUser');
-  }
-
-  function setAuthUser(name) {
-    localStorage.setItem('authUser', name);
-    updateAuthUI();
-  }
-
-  function clearAuthUser() {
-    localStorage.removeItem('authUser');
-    updateAuthUI();
-  }
-
-  function updateAuthUI() {
-    const name = getAuthUser() || 'Tài khoản';
-    if (userNameEl) {
-      userNameEl.textContent = name;
-    }
-    if (!userMenu) {
-      return;
-    }
-
-    const loginAction = userMenu.querySelector('#login-action');
-    const logoutAction = userMenu.querySelector('#logout-action');
-
-    if (getAuthUser()) {
-      if (loginAction) loginAction.hidden = true;
-      if (logoutAction) logoutAction.hidden = false;
-    } else {
-      if (loginAction) loginAction.hidden = false;
-      if (logoutAction) logoutAction.hidden = true;
-    }
-  }
 
   updateAuthUI();
 
@@ -139,7 +174,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (loginAction) {
       loginAction.addEventListener('click', () => {
-        if (authBackdrop) authBackdrop.classList.add('active');
+        if (authBackdrop) {
+          authBackdrop.classList.add('active');
+        } else {
+          window.location.href = 'admin.html';
+        }
       });
     }
 
@@ -260,6 +299,11 @@ document.addEventListener('DOMContentLoaded', () => {
   let currentBrands = ['all'];  // hãng (multi-select)
   let currentSort = 'popular';  // sắp xếp / lọc khuyến mãi
   let searchQuery = '';         // search theo tên
+  
+  // Pagination state
+  let currentPage = 1;
+  let itemsPerPage = 12;
+  let totalProducts = [];  // Store filtered products for pagination
 
   // ---------- Render ----------
   function createProductCard(product) {
@@ -308,12 +352,145 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (!productsArray || productsArray.length === 0) {
       productListEl.innerHTML = '<div class="no-products">Không có sản phẩm.</div>';
+      renderPaginationButtons([]);
       return;
     }
 
+    totalProducts = productsArray;
+    currentPage = 1;
+    displayProductsPage(productsArray);
+  }
+
+  function displayProductsPage(productsArray, shouldScroll = false) {
+    productListEl.innerHTML = '';
+
+    if (!productsArray || productsArray.length === 0) {
+      productListEl.innerHTML = '<div class="no-products">Không có sản phẩm.</div>';
+      renderPaginationButtons([]);
+      return;
+    }
+
+    // Calculate pagination
+    const totalPages = Math.ceil(productsArray.length / itemsPerPage);
+    const startIndex = (currentPage - 1) * itemsPerPage;
+    const endIndex = startIndex + itemsPerPage;
+    const pageProducts = productsArray.slice(startIndex, endIndex);
+
+    // Display products for current page
     const fragment = document.createDocumentFragment();
-    productsArray.forEach((p) => fragment.appendChild(createProductCard(p)));
+    pageProducts.forEach((p) => fragment.appendChild(createProductCard(p)));
     productListEl.appendChild(fragment);
+
+    // Render pagination buttons
+    renderPaginationButtons(productsArray, totalPages);
+
+    // Scroll to top of product list only when pagination is clicked
+    if (shouldScroll) {
+      productListEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  }
+
+  function renderPaginationButtons(productsArray, totalPages) {
+    const paginationContainer = document.getElementById('pagination-container');
+    const paginationNumbers = document.getElementById('pagination-numbers');
+    const paginationPrev = document.getElementById('pagination-prev');
+    const paginationNext = document.getElementById('pagination-next');
+
+    if (!paginationContainer) return;
+
+    const actualTotalPages = totalPages || Math.ceil((productsArray?.length || 0) / itemsPerPage);
+
+    // Hide pagination if only 1 page
+    if (actualTotalPages <= 1) {
+      paginationContainer.style.display = 'none';
+      return;
+    }
+
+    paginationContainer.style.display = 'flex';
+
+    // Clear and render page numbers
+    paginationNumbers.innerHTML = '';
+
+    // Previous button
+    if (paginationPrev) {
+      paginationPrev.disabled = currentPage === 1;
+      paginationPrev.onclick = () => {
+        if (currentPage > 1) {
+          currentPage--;
+          displayProductsPage(productsArray, true);
+        }
+      };
+    }
+
+    // Page number buttons with ellipsis
+    const maxVisiblePages = 5;
+    let startPage = Math.max(1, currentPage - Math.floor(maxVisiblePages / 2));
+    let endPage = Math.min(actualTotalPages, startPage + maxVisiblePages - 1);
+
+    if (endPage - startPage < maxVisiblePages - 1) {
+      startPage = Math.max(1, endPage - maxVisiblePages + 1);
+    }
+
+    // First page button
+    if (startPage > 1) {
+      const btn1 = document.createElement('button');
+      btn1.className = 'pagination-number';
+      btn1.textContent = '1';
+      btn1.onclick = () => {
+        currentPage = 1;
+        displayProductsPage(productsArray, true);
+      };
+      paginationNumbers.appendChild(btn1);
+
+      if (startPage > 2) {
+        const ellipsis = document.createElement('div');
+        ellipsis.className = 'pagination-number ellipsis';
+        ellipsis.textContent = '...';
+        paginationNumbers.appendChild(ellipsis);
+      }
+    }
+
+    // Page number buttons
+    for (let i = startPage; i <= endPage; i++) {
+      const btn = document.createElement('button');
+      btn.className = 'pagination-number' + (i === currentPage ? ' active' : '');
+      btn.textContent = i;
+      btn.onclick = () => {
+        currentPage = i;
+        displayProductsPage(productsArray, true);
+      };
+      paginationNumbers.appendChild(btn);
+    }
+
+    // Last page button
+    if (endPage < actualTotalPages) {
+      if (endPage < actualTotalPages - 1) {
+        const ellipsis = document.createElement('div');
+        ellipsis.className = 'pagination-number ellipsis';
+        ellipsis.textContent = '...';
+        paginationNumbers.appendChild(ellipsis);
+      }
+
+      const btnLast = document.createElement('button');
+      btnLast.className = 'pagination-number';
+      btnLast.textContent = actualTotalPages;
+      btnLast.onclick = () => {
+        currentPage = actualTotalPages;
+        displayProductsPage(productsArray, true);
+      };
+      paginationNumbers.appendChild(btnLast);
+    }
+
+    // Next button
+    if (paginationNext) {
+      paginationNext.disabled = currentPage === actualTotalPages;
+      paginationNext.onclick = () => {
+        if (currentPage < actualTotalPages) {
+          currentPage++;
+          displayProductsPage(productsArray, true);
+        }
+      };
+    }
   }
 
   function applyFilters() {
@@ -347,7 +524,10 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     // popular: giữ nguyên
 
-    displayProducts(result);
+    // Reset to page 1 when filters change
+    currentPage = 1;
+    totalProducts = result;
+    displayProductsPage(result);
   }
 
   // ---------- Events ----------
@@ -485,6 +665,7 @@ document.addEventListener('DOMContentLoaded', () => {
       currentBrands = ['all'];
       currentSort = 'popular';
       searchQuery = '';
+      currentPage = 1;
 
       setActiveDemand(null);
       setActiveBrand();

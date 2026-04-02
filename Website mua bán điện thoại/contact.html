@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Liên Hệ - Shop36</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/footer.css" />
+  <style>
+    body.contact-page {
+      background: #f5f5f5;
+    }
+
+    .contact-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 40px 20px 60px;
+    }
+
+    .contact-header {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+
+    .contact-header h1 {
+      font-size: 32px;
+      font-weight: 700;
+      margin-bottom: 12px;
+      color: #111;
+    }
+
+    .contact-header p {
+      font-size: 16px;
+      color: #666;
+      margin-bottom: 0;
+    }
+
+    /* 3-column layout: Left info | Map | Right info */
+    .contact-wrapper {
+      display: grid;
+      grid-template-columns: 300px 1fr 300px;
+      gap: 24px;
+      margin-bottom: 40px;
+    }
+
+    .contact-info {
+      background: #fff;
+      border-radius: 8px;
+      padding: 24px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+      height: fit-content;
+    }
+
+    .contact-info h2 {
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 20px;
+      color: #111;
+    }
+
+    .contact-item {
+      margin-bottom: 16px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid #f0f0f0;
+    }
+
+    .contact-item:last-child {
+      border-bottom: none;
+      margin-bottom: 0;
+      padding-bottom: 0;
+    }
+
+    .contact-item-label {
+      font-size: 12px;
+      font-weight: 600;
+      color: #e60023;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+
+    .contact-item-value {
+      font-size: 14px;
+      color: #333;
+      line-height: 1.6;
+    }
+
+    .contact-item-value a {
+      color: #e60023;
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+
+    .contact-item-value a:hover {
+      color: #b30000;
+    }
+
+    /* Map Container */
+    .map-container {
+      background: #fff;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    }
+
+    .map-container iframe {
+      width: 100%;
+      height: 500px;
+      border: none;
+      display: block;
+    }
+
+    /* Responsive */
+    @media (max-width: 1024px) {
+      .contact-wrapper {
+        grid-template-columns: 1fr;
+      }
+
+      .map-container iframe {
+        height: 400px;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .contact-wrapper {
+        grid-template-columns: 1fr;
+      }
+
+      .contact-info {
+        padding: 16px;
+      }
+
+      .map-container iframe {
+        height: 300px;
+      }
+
+      .contact-form {
+        padding: 16px;
+      }
+    }
+  </style>
+</head>
+
+<body class="contact-page">
+
+  <!-- Thanh thông tin trên cùng -->
+  <div class="top-info-bar">
+    <div class="container">
+      <ul class="top-info-list">
+        <li><a href="#">Xuất VAT đầy đủ</a></li>
+        <li><a href="#">Giao nhanh - Miễn phí cho đơn 300k+</a></li>
+        <li><a href="#">Thu cũ giá ngon - Lên đời tiết kiệm</a></li>
+        <li><a href="#">Sản phẩm Chính hãng - Xuất VAT đầy</a></li>
+        <li><a href="#">Cửa hàng gần bạn</a></li>
+        <li><a href="#">Tra cứu đơn hàng</a></li>
+        <li><span>1800 2097</span></li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Thanh header chính -->
+  <header class="main-header">
+    <div class="container header-flex">
+      <div class="header-left">
+        <a href="index.html" class="logo" aria-label="Về trang chủ">
+          <span class="logo-text">Shop<span class="logo-number">36</span></span>
+        </a>
+      </div>
+
+      <div class="header-center">
+        <div class="search-wrapper" role="search">
+          <span class="search-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="18" height="18">
+              <path
+                d="M10 4a6 6 0 104.472 10.03l4.249 4.25 1.414-1.415-4.25-4.249A6 6 0 0010 4zm0 2a4 4 0 110 8 4 4 0 010-8z"
+                fill="currentColor"
+              />
+            </svg>
+          </span>
+          <input
+            id="search-input"
+            type="text"
+            class="search-input"
+            placeholder="Bạn muốn mua gì hôm nay..."
+            autocomplete="off"
+            aria-label="Tìm kiếm sản phẩm"
+          />
+          <div id="search-suggestions" class="search-suggestions" hidden></div>
+        </div>
+      </div>
+
+      <div class="header-right">
+        <button class="cart-btn" id="cart-btn" type="button" aria-label="Giỏ hàng" onclick="window.location.href='cart.html'">
+          Giỏ hàng <span aria-hidden="true">🛒</span> <span id="cart-count">0</span>
+        </button>
+
+        <button class="user-btn" id="user-btn" type="button" aria-label="Tài khoản người dùng">
+          <span id="user-name">Hùng</span> <span aria-hidden="true">👤</span>
+        </button>
+
+        <div id="user-menu" class="user-menu" hidden>
+          <button id="login-action" type="button">Đăng nhập</button>
+          <button id="logout-action" type="button">Đăng xuất</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Navigation Menu -->
+    <div class="container">
+      <nav class="nav-menu">
+        <a href="index.html">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
+          Trang Chủ
+        </a>
+        <a href="about.html">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg>
+          Giới Thiệu
+        </a>
+        <a href="news.html">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M5 3c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2H5zm0 2h14v10H5V5zm2 11h10v2H7z"/></svg>
+          Tin Tức
+        </a>
+        <a href="contact.html" class="active">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.01 15.38c-1.23 0-2.42-.2-3.53-.56-.35-.12-.74-.03-1.01.24l-1.57 1.97c-2.83-1.35-5.48-3.9-6.89-6.83l1.95-1.66c.27-.28.35-.67.24-1.02-.37-1.11-.56-2.3-.56-3.53 0-.54-.45-.99-.99-.99H4.19C3.65 3 3 3.24 3 3.99 3 13.28 10.73 21 20.01 21c.71 0 .99-.63.99-1.18v-3.45c0-.54-.45-.99-.99-.99z"/></svg>
+          Liên Hệ
+        </a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Breadcrumb -->
+  <nav class="breadcrumb container">
+    <a href="index.html">Trang chủ</a> &gt; <span>Liên Hệ</span>
+  </nav>
+
+  <!-- Main Content -->
+  <div class="contact-container">
+    <div class="contact-header">
+      <h1>Liên Hệ Với Chúng Tôi</h1>
+      <p>Chúng tôi sẵn sàng giúp đỡ bạn mọi lúc</p>
+    </div>
+
+    <!-- Map + Side Info Layout -->
+    <div class="contact-wrapper">
+      <!-- Left: Contact Info -->
+      <div class="contact-info">
+        <h2>Thông Tin Liên Hệ</h2>
+        
+        <div class="contact-item">
+          <div class="contact-item-label">📍 Địa Chỉ</div>
+          <div class="contact-item-value">
+            26 ngõ 79 Mễ Trì Thượng<br>
+            Từ Liêm<br>
+            Hà Nội, Việt Nam
+          </div>
+        </div>
+
+        <div class="contact-item">
+          <div class="contact-item-label">🕐 Giờ Mở Cửa</div>
+          <div class="contact-item-value">
+            Thứ 2 - Thứ 7:<br>8:00 - 20:00<br><br>
+            Chủ Nhật:<br>9:00 - 19:00
+          </div>
+        </div>
+
+        <div class="contact-item">
+          <div class="contact-item-label">📧 Email</div>
+          <div class="contact-item-value">
+            <a href="mailto:support@shop36.com">support@shop36.com</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Center: Map -->
+      <div class="map-container">
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3724.5555555555556!2d105.7741129!3d21.0063965!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31345353d057759b%3A0x28436df7236a58d0!2z26%20ng%C3%B5%2079%20M%E1%BB%85%20Tr%C3%AC%20Th%C6%B0%E1%BB%A3ng%2C%20T%E1%BB%AB%20Li%C3%AAm%2C%20H%C3%A0%20N%E1%BB%99i!5e0!3m2!1svi!2s!4v1712090000000" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+      </div>
+
+      <!-- Right: Support Info -->
+      <div class="contact-info">
+        <h2>Hỗ Trợ 24/7</h2>
+        
+        <div class="contact-item">
+          <div class="contact-item-label">📞 Hotline</div>
+          <div class="contact-item-value">
+            <a href="tel:18006750"><strong>1800 6750</strong></a><br>
+            <span style="font-size: 12px; color: #999;">Miễn phí toàn quốc</span>
+          </div>
+        </div>
+
+        <div class="contact-item">
+          <div class="contact-item-label">💬 Chat Trực Tuyến</div>
+          <div class="contact-item-value">
+            <a href="#">Mở Chat</a><br>
+            <span style="font-size: 12px; color: #999;">Hỗ trợ 24/7</span>
+          </div>
+        </div>
+
+        <div class="contact-item">
+          <div class="contact-item-label">🌐 Mạng Xã Hội</div>
+          <div class="contact-item-value">
+            <a href="#">Facebook</a> | 
+            <a href="#">Instagram</a><br>
+            <a href="#">YouTube</a> | 
+            <a href="#">TikTok</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="main-footer">
+    <div class="container footer-flex">
+      <div class="footer-col">
+
+        <h4>Tổng đài hỗ trợ miễn phí</h4>
+        <p>Mua hàng - bảo hành <strong>1800.2097</strong> (7h30 - 22h00)</p>
+        <p>Khiếu nại <strong>1800.2063</strong> (8h00 - 21h30)</p>
+
+        <h4>Phương thức thanh toán</h4>
+        <p>Chấp nhận tất cả: thẻ tín dụng, ví Momo/ZaloPay/VNPay, COD, trả góp 0%.</p>
+
+        <h4>ĐĂNG KÝ NHẬN TIN KHUYẾN MÃI</h4>
+        <p class="promotion-note">
+          <strong>Nhận ngay voucher 10%</strong><br />
+          Voucher sẽ được gửi sau 24h, chỉ áp dụng cho khách hàng mới
+        </p>
+
+        <form id="promo-form" class="promo-form">
+          <label for="email">Email</label>
+          <input id="email" name="email" type="email" placeholder="Nhập email của bạn" required />
+
+          <label for="phone">Số điện thoại</label>
+          <input id="phone" name="phone" type="tel" placeholder="Nhập số điện thoại của bạn" required />
+
+          <label class="checkbox-label">
+            <input type="checkbox" id="agree" required />
+            Đồng ý điều khoản Shop36
+          </label>
+
+          <button type="submit" class="btn-submit">ĐĂNG KÝ NGAY</button>
+        </form>
+      </div>
+      <div class="footer-col">
+        <h4>Thông tin thành viên nhóm</h4>
+        <ul>
+          <li><a href="#" style="display: flex; justify-content: space-between;"><span>Đỗ Mạnh Hùng</span><span>BCS240019</span></a></li>
+          <li><a href="#" style="display: flex; justify-content: space-between;"><span>Yến Nhi</span><span>BCS240020</span></a></li>
+          <li><a href="#" style="display: flex; justify-content: space-between;"><span>Lê Hoàng Nam</span><span>BCS240021</span></a></li>
+          <li><a href="#" style="display: flex; justify-content: space-between;"><span>Dương Nguyên Thượng</span><span>BCS240022</span></a></li>
+          <li><a href="#" style="display: flex; justify-content: space-between;"><span>Đỗ Khánh Ly</span><span>BCS240023</span></a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Dịch vụ và thông tin khác</h4>
+        <ul>
+          <li><a href="#">Khách hàng doanh nghiệp (B2B)</a></li>
+          <li><a href="#">Ưu đãi thanh toán</a></li>
+          <li><a href="#">Quy chế hoạt động</a></li>
+          <li><a href="#">Chính sách bảo mật thông tin cá nhân</a></li>
+          <li><a href="#">Chính sách Bảo hành</a></li>
+          <li><a href="#">Liên hệ hợp tác kinh doanh</a></li>
+          <li><a href="#">Tuyển dụng</a></li>
+          <li><a href="#">Dịch vụ bảo hành mở rộng</a></li>
+        </ul>
+
+        <h4>Mua sắm dễ dàng – Ưu đãi ngập tràn cùng app Shop36</h4>
+        <p><strong>Tải app Shop36</strong> - Ưu đãi nhanh!</p>
+          <a href="#" class="app-btn">App Store</a>
+          <a href="#" class="app-btn">Google Play</a>
+      </div>
+      <div class="footer-col">
+        <h4>Kết nối với Shop36</h4>
+        <ul class="social-links">
+          <li><a href="#">YouTube</a></li>
+          <li><a href="#">Facebook</a></li>
+          <li><a href="#">Instagram</a></li>
+          <li><a href="#">TikTok</a></li>
+          <li><a href="#">Zalo</a></li>
+        </ul>
+
+        
+      </div>
+    </div>
+
+    <!-- Nút lên đầu -->
+    <div class="footer-fixed-btns">
+      <button id="btn-scroll-top" aria-label="Lên đầu" title="Lên đầu">⮝</button>
+    </div>
+  </footer>
+
+  <div class="toast-wrapper" id="toast-wrapper"></div>
+
+  <div class="auth-modal-backdrop" id="auth-modal-backdrop" aria-hidden="true">
+    <div class="auth-modal">
+      <header>Đăng nhập</header>
+      <div class="auth-content">
+        <label for="auth-phone">Tài khoản</label>
+        <input id="auth-phone" type="text" placeholder="Nhập tài khoản của bạn" />
+
+        <label for="auth-password">Mật khẩu</label>
+        <input id="auth-password" type="password" placeholder="Nhập mật khẩu của bạn" />
+
+        <button id="auth-login-btn" class="auth-btn" type="button">Đăng nhập</button>
+
+        <div class="auth-secondary">
+          <button id="auth-google-btn" type="button">Đăng nhập bằng Google</button>
+          <button id="auth-zalo-btn" type="button">Đăng nhập bằng Zalo</button>
+        </div>
+
+        <div class="auth-footer">
+          Chưa có tài khoản? <a href="#" id="auth-register">Đăng ký ngay</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/script.js"></script>
+  <script>
+    // Scroll to top button
+    document.addEventListener('DOMContentLoaded', () => {
+      const scrollTopBtn = document.getElementById('btn-scroll-top');
+      if (scrollTopBtn) {
+        scrollTopBtn.addEventListener('click', () => {
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+      }
+    });
+  </script>
+</body>
+</html>
