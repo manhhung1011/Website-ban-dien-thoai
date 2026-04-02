@@ -242,26 +242,21 @@
       <div id="dashboard-panel" class="panel">
         <h2 class="panel-title">Dashboard - Control panel</h2>
 
-        <!-- Stat Cards -->
+        <!-- Dashboard stat cards -->
         <div class="dashboard-stats">
           <div class="stat-box green">
             <div class="stat-box-label">Người Dùng</div>
-            <div class="stat-box-value">6</div>
-            <div class="stat-box-more">More info →</div>
-          </div>
-          <div class="stat-box blue">
-            <div class="stat-box-label">Bài Viết</div>
-            <div class="stat-box-value">20</div>
+            <div class="stat-box-value" id="dashboard-users-count">0</div>
             <div class="stat-box-more">More info →</div>
           </div>
           <div class="stat-box orange">
             <div class="stat-box-label">Sản Phẩm</div>
-            <div class="stat-box-value">54</div>
+            <div class="stat-box-value" id="dashboard-products-count">0</div>
             <div class="stat-box-more">More info →</div>
           </div>
           <div class="stat-box purple">
             <div class="stat-box-label">Đơn Hàng</div>
-            <div class="stat-box-value">8</div>
+            <div class="stat-box-value" id="dashboard-orders-count">0</div>
             <div class="stat-box-more">More info →</div>
           </div>
         </div>
@@ -269,46 +264,31 @@
         <!-- Charts -->
         <div class="dashboard-charts">
           <div class="chart-wrapper">
-            <h3>Thống Kê Lưu Truy Cập Website (01/01/2026 - 02/04/2026)</h3>
-            <svg class="chart-svg" viewBox="0 0 400 250" xmlns="http://www.w3.org/2000/svg">
-              <line x1="40" y1="200" x2="380" y2="200" stroke="#e5e7eb" stroke-width="2"/>
-              <line x1="40" y1="150" x2="380" y2="150" stroke="#f3f4f6" stroke-width="1"/>
-              <line x1="40" y1="100" x2="380" y2="100" stroke="#f3f4f6" stroke-width="1"/>
-              <line x1="40" y1="50" x2="380" y2="50" stroke="#f3f4f6" stroke-width="1"/>
-              <polygon points="40,160 80,110 120,130 160,80 200,120 240,60 280,100 320,70 360,110 380,90 380,200 40,200" fill="#5eb3d6" opacity="0.2"/>
-              <polyline points="40,160 80,110 120,130 160,80 200,120 240,60 280,100 320,70 360,110 380,90" stroke="#3498db" stroke-width="2" fill="none"/>
-              <text x="50" y="225" font-size="11" fill="#999">January</text><text x="130" y="225" font-size="11" fill="#999">March</text><text x="210" y="225" font-size="11" fill="#999">May</text><text x="290" y="225" font-size="11" fill="#999">July</text>
+            <h3>Doanh thu Confirmed theo tháng</h3>
+            <svg id="dashboard-sales-trend-chart" class="chart-svg" viewBox="0 0 400 250" xmlns="http://www.w3.org/2000/svg">
+              <g id="dashboard-sales-axis"></g>
+              <g id="dashboard-sales-data"></g>
+              <g id="dashboard-sales-labels"></g>
             </svg>
           </div>
 
           <div class="chart-wrapper">
-            <h3>Trình Duyệt Được Sử Dụng</h3>
-            <svg class="chart-svg" viewBox="0 0 320 200" xmlns="http://www.w3.org/2000/svg">
-              <!-- Donut Chart -->
-              <circle cx="70" cy="100" r="60" fill="none" stroke="#5eb3d6" stroke-width="20" stroke-dasharray="94 376" stroke-dashoffset="0"/>
-              <circle cx="70" cy="100" r="60" fill="none" stroke="#f39c12" stroke-width="20" stroke-dasharray="47 376" stroke-dashoffset="-94"/>
-              <circle cx="70" cy="100" r="60" fill="none" stroke="#2ecc71" stroke-width="20" stroke-dasharray="63 376" stroke-dashoffset="-141"/>
-              <circle cx="70" cy="100" r="60" fill="none" stroke="#e74c3c" stroke-width="20" stroke-dasharray="94 376" stroke-dashoffset="-204"/>
-              <circle cx="70" cy="100" r="60" fill="none" stroke="#9b59b6" stroke-width="20" stroke-dasharray="78 376" stroke-dashoffset="-298"/>
+            <h3>Phân bố đơn hàng theo trạng thái</h3>
+            <svg id="dashboard-status-donut" class="chart-svg" viewBox="0 0 320 200" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="70" cy="100" r="60" fill="none" stroke="#e6e9f6" stroke-width="20"/>
+              <g id="dashboard-status-segments"></g>
               <circle cx="70" cy="100" r="38" fill="#fff"/>
-              <!-- Legend -->
-              <g font-size="11" fill="#333">
-                <circle cx="165" cy="35" r="4" fill="#5eb3d6"/><text x="177" y="40">Chrome</text>
-                <circle cx="165" cy="60" r="4" fill="#f39c12"/><text x="177" y="65">IE</text>
-                <circle cx="165" cy="85" r="4" fill="#2ecc71"/><text x="177" y="90">Firefox</text>
-                <circle cx="165" cy="110" r="4" fill="#e74c3c"/><text x="177" y="115">Safari</text>
-                <circle cx="165" cy="135" r="4" fill="#9b59b6"/><text x="177" y="140">Opera</text>
-              </g>
+              <g id="dashboard-status-legend" font-size="11" fill="#333"></g>
             </svg>
           </div>
         </div>
 
         <!-- Bottom Stats -->
         <div class="dashboard-stats-bottom">
-          <div class="stat-mini"><div class="stat-mini-value">40</div><div class="stat-mini-label">USERS ACCESS</div></div>
-          <div class="stat-mini"><div class="stat-mini-value">10</div><div class="stat-mini-label">NEW USERS</div></div>
-          <div class="stat-mini"><div class="stat-mini-value">90</div><div class="stat-mini-label">VIEWS PAGE</div></div>
-          <div class="stat-mini"><div class="stat-mini-value">700</div><div class="stat-mini-label">USED CHROME</div></div>
+          <div class="stat-mini"><div class="stat-mini-value" id="dashboard-confirmed-count">0</div><div class="stat-mini-label">Confirmed</div></div>
+          <div class="stat-mini"><div class="stat-mini-value" id="dashboard-delivered-count">0</div><div class="stat-mini-label">Delivered</div></div>
+          <div class="stat-mini"><div class="stat-mini-value" id="dashboard-revenue-total">0đ</div><div class="stat-mini-label">Doanh thu</div></div>
+          <div class="stat-mini"><div class="stat-mini-value" id="dashboard-profit-total">0đ</div><div class="stat-mini-label">Lợi nhuận</div></div>
         </div>
       </div>
 
@@ -320,41 +300,75 @@
 
       <div id="products-panel" class="panel" style="display:none;">
         <h2 class="panel-title">Quản lý sản phẩm</h2>
-        <div class="top-actions"><button class="btn-green" id="new-product">New Product</button><button class="btn-blue" id="refresh-products">Refresh</button></div>
-        <table class="data-table" id="products-table"><thead><tr><th>ID</th><th>Ảnh</th><th>Mã SP</th><th>Tên SP</th><th>Hãng</th><th>HĐH</th><th>Đánh giá</th><th>Ngày tạo</th><th>Trạng thái</th><th>Tác vụ</th></tr></thead><tbody></tbody></table>
+        <div class="top-actions" style="align-items:center;">
+          <button class="btn-green" id="new-product">New Product</button>
+          <button class="btn-blue" id="refresh-products">Refresh</button>
+          <select id="product-filter-field" style="margin-left:12px;padding:7px 10px;border-radius:8px;border:1px solid #ccc;">
+            <option value="all">Tất cả</option>
+            <option value="name">Tên sản phẩm</option>
+            <option value="code">Mã SP</option>
+            <option value="brand">Hãng</option>
+          </select>
+          <input type="text" id="product-search" placeholder="Tìm sản phẩm..." style="margin-left:12px;flex:1;min-width:220px;padding:7px 10px;border-radius:8px;border:1px solid #ccc;" />
+        </div>
+        <table class="data-table" id="products-table"><thead><tr><th>ID</th><th>Ảnh</th><th>Mã SP</th><th>Tên SP</th><th>Hãng</th><th>Ngày tạo</th><th>Trạng thái</th><th>Tác vụ</th></tr></thead><tbody></tbody></table>
+        <div id="products-pagination" class="pagination-container" style="margin-top:12px;"></div>
       </div>
 
       <div id="orders-panel" class="panel" style="display:none;">
         <h2 class="panel-title">Quản lý đơn hàng</h2>
-        <div class="top-actions"><input id="order-search" type="text" placeholder="Tìm mã đơn, khách hàng..." style="min-width:220px;"><button class="btn-blue" id="refresh-orders">Refresh</button></div>
-        <table class="data-table" id="orders-table"><thead><tr><th>ID</th><th>Mã đơn</th><th>Tài khoản</th><th>Người đặt</th><th>Email</th><th>Điện thoại</th><th>Thanh toán</th><th>Ngày tạo</th><th>Tác vụ</th></tr></thead><tbody></tbody></table>
+        <div class="top-actions" style="gap:10px; flex-wrap:wrap;">
+          <button class="btn-blue" id="new-order">New order</button>
+          <input id="order-search" type="text" placeholder="Tìm mã đơn, khách hàng, email..." style="min-width:220px;">
+          <select id="order-status-filter" style="padding:7px 10px;border-radius:8px;border:1px solid #ccc;">
+            <option value="all">Tất cả trạng thái</option>
+            <option value="Pending">Chờ xử lý</option>
+            <option value="Confirmed">Đã xác nhận</option>
+            <option value="Shipping">Đang giao</option>
+            <option value="Delivered">Đã giao</option>
+            <option value="Cancelled">Đã huỷ</option>
+          </select>
+          <button class="btn-blue" id="refresh-orders">Refresh</button>
+        </div>
+        <table class="data-table" id="orders-table"><thead><tr><th>ID</th><th>Mã đơn</th><th>Tài khoản</th><th>Người đặt</th><th>Email</th><th>Điện thoại</th><th>Thanh toán</th><th>Ngày tạo</th><th>Trạng thái</th><th>Tổng tiền</th><th>Tác vụ</th></tr></thead><tbody></tbody></table>
       </div>
 
       <div id="sales-panel" class="panel" style="display:none;">
         <h2 class="panel-title">Thống kê doanh thu bán hàng</h2>
-        <div class="top-actions">
+        <div class="top-actions" style="gap:10px; flex-wrap:wrap;">
           <select id="sales-year" style="padding:8px 12px;border:1px solid #ddd;border-radius:6px;">
             <option value="2024">2024</option>
             <option value="2025">2025</option>
             <option value="2026">2026</option>
+          </select>
+          <select id="sales-month" style="padding:8px 12px;border:1px solid #ddd;border-radius:6px;">
+            <option value="0">Toàn năm</option>
+            <option value="1">Tháng 1</option>
+            <option value="2">Tháng 2</option>
+            <option value="3">Tháng 3</option>
+            <option value="4">Tháng 4</option>
+            <option value="5">Tháng 5</option>
+            <option value="6">Tháng 6</option>
+            <option value="7">Tháng 7</option>
+            <option value="8">Tháng 8</option>
+            <option value="9">Tháng 9</option>
+            <option value="10">Tháng 10</option>
+            <option value="11">Tháng 11</option>
+            <option value="12">Tháng 12</option>
           </select>
         </div>
 
         <!-- Revenue Trend Chart -->
         <div class="chart-wrapper" style="margin-bottom:24px;">
           <h3 id="sales-chart-title">Biểu Độ Kinh Doanh Tháng 03 Năm 2024</h3>
-          <svg class="chart-svg" viewBox="0 0 800 300" xmlns="http://www.w3.org/2000/svg" style="height:280px;">
-            <line x1="50" y1="30" x2="50" y2="260" stroke="#999" stroke-width="2"/>
-            <line x1="45" y1="260" x2="780" y2="260" stroke="#999" stroke-width="2"/>
-            <text x="15" y="270" font-size="11" fill="#999">0 VND</text>
-            <text x="10" y="160" font-size="11" fill="#999">50M</text>
-            <text x="10" y="60" font-size="11" fill="#999">250M</text>
-            <text x="10" y="35" font-size="11" fill="#999">300M</text>
-            <polyline points="70,240 100,220 130,200 160,180 190,160 220,140 250,120 280,100 310,130 340,110 370,90 400,70 430,60 460,80 490,100 520,120 550,140 580,160 610,180 640,200 670,220 700,250 730,260 760,260" stroke="#2980b9" stroke-width="3" fill="none"/>
-            <polygon points="70,240 100,220 130,200 160,180 190,160 220,140 250,120 280,100 310,130 340,110 370,90 400,70 430,60 460,80 490,100 520,120 550,140 580,160 610,180 640,200 670,220 700,250 730,260 760,260 760,280 70,280" fill="#5eb3d6" opacity="0.2"/>
-            <g font-size="10" fill="#999">
-              <text x="65" y="280">01/03</text><text x="125" y="280">05/03</text><text x="185" y="280">09/03</text><text x="245" y="280">13/03</text><text x="305" y="280">17/03</text><text x="365" y="280">21/03</text><text x="425" y="280">25/03</text><text x="485" y="280">29/03</text>
+          <svg id="sales-trend-chart" viewBox="0 0 800 300" xmlns="http://www.w3.org/2000/svg" style="height:280px;">
+            <g id="sales-chart-axis">
+              <line x1="50" y1="30" x2="50" y2="260" stroke="#999" stroke-width="2"/>
+              <line x1="45" y1="260" x2="780" y2="260" stroke="#999" stroke-width="2"/>
+              <text x="15" y="270" font-size="11" fill="#999">0</text>
             </g>
+            <g id="sales-chart-data"></g>
+            <g id="sales-chart-labels"></g>
           </svg>
         </div>
 
@@ -375,56 +389,31 @@
         </div>
 
         <!-- Donut Charts -->
-        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-bottom:24px;">
-          <div class="chart-wrapper">
-            <h3>Biểu Độ Kinh Doanh Số Bán Hàng</h3>
-            <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:200px;">
-              <circle cx="100" cy="100" r="50" fill="none" stroke="#2980b9" stroke-width="25" stroke-dasharray="125 314"/>
-              <circle cx="100" cy="100" r="30" fill="#fff"/>
-              <text x="100" y="105" text-anchor="middle" font-size="18" font-weight="700" fill="#2980b9">100%</text>
-            </svg>
-          </div>
-          <div class="chart-wrapper">
+        <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:20px;margin-bottom:24px;">
+          <div class="chart-wrapper" id="chart-sales-brand-share">
             <h3>Thị Phần Sản Phẩm Bán Được Theo Nhà Sản Xuất</h3>
-            <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:200px;">
-              <circle cx="100" cy="100" r="50" fill="none" stroke="#2980b9" stroke-width="25" stroke-dasharray="125 314"/>
+            <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:200px;" id="chart-sales-brand-svg">
+              <circle cx="100" cy="100" r="50" fill="none" stroke="#e6e9f6" stroke-width="25"/>
+              <g id="chart-sales-brand-segments"></g>
               <circle cx="100" cy="100" r="30" fill="#fff"/>
-              <text x="100" y="105" text-anchor="middle" font-size="18" font-weight="700" fill="#2980b9">100%</text>
             </svg>
+            <div id="chart-sales-brand-legend" style="margin-top:12px;font-size:13px;color:#333;"></div>
           </div>
-          <div class="chart-wrapper">
+          <div class="chart-wrapper" id="chart-sales-profit-share">
             <h3>Thị Phần Lợi Nhuận Theo Nhà Sản Xuất</h3>
-            <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:200px;">
-              <circle cx="100" cy="100" r="50" fill="none" stroke="#2980b9" stroke-width="25" stroke-dasharray="125 314"/>
+            <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:200px;" id="chart-sales-profit-svg">
+              <circle cx="100" cy="100" r="50" fill="none" stroke="#e6e9f6" stroke-width="25"/>
+              <g id="chart-sales-profit-segments"></g>
               <circle cx="100" cy="100" r="30" fill="#fff"/>
-              <text x="100" y="105" text-anchor="middle" font-size="18" font-weight="700" fill="#2980b9">100%</text>
             </svg>
+            <div id="chart-sales-profit-legend" style="margin-top:12px;font-size:13px;color:#333;"></div>
           </div>
         </div>
 
-        <!-- Bottom Summary Stats -->
-        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:24px;background:#fff;border:1px solid #e9ecf7;border-radius:12px;padding:20px;">
-          <div style="text-align:center;border-right:1px solid #eee;padding-right:16px;">
-            <div style="font-size:24px;font-weight:700;color:#e74c3c;">1</div>
-            <div style="font-size:12px;color:#999;margin-top:8px;">ĐƠN HÀNG</div>
-          </div>
-          <div style="text-align:center;border-right:1px solid #eee;padding-right:16px;">
-            <div style="font-size:24px;font-weight:700;color:#27ae60;">7</div>
-            <div style="font-size:12px;color:#999;margin-top:8px;">SẢN PHẨM XUẤT KHO</div>
-          </div>
-          <div style="text-align:center;border-right:1px solid #eee;padding-right:16px;">
-            <div style="font-size:24px;font-weight:700;color:#2980b9;"><span id="sales-revenue-bottom">229.430.000</span> VND</div>
-            <div style="font-size:12px;color:#999;margin-top:8px;">DOANH THU THÁNG</div>
-          </div>
-          <div style="text-align:center;">
-            <div style="font-size:24px;font-weight:700;color:#e67e22;">9.000.000 VND</div>
-            <div style="font-size:12px;color:#999;margin-top:8px;">LỢI NHUẬN THÁNG</div>
-          </div>
-        </div>
 
         <!-- Data Table -->
         <div class="card" style="background:#fff;border:1px solid #e9ecf7;border-radius:12px;padding:20px;">
-          <h3 style="margin:0 0 16px;">Danh Sách Sản Phẩm Xuất Kho Tháng 03 Năm 2024</h3>
+          <h3 id="sales-table-title" style="margin:0 0 16px;">Danh Sách Sản Phẩm Xuất Kho</h3>
           <table class="data-table" id="sales-table" style="width:100%;">
             <thead>
               <tr style="background:#f7f8ff;">
@@ -507,6 +496,37 @@
   </div>
 </div>
 
+<!-- Modal Form for Product Management -->
+<div class="modal-overlay" id="product-modal" style="display:none;">
+  <div class="modal-form" style="max-width:420px;">
+    <h2 id="product-modal-title">Thêm sản phẩm</h2>
+    <form id="product-form">
+      <div class="form-group"><label for="p-name">Tên sản phẩm *</label><input id="p-name" type="text" required /><div class="error-text"></div></div>
+      <div class="form-group"><label for="p-sku">Mã SKU *</label><input id="p-sku" type="text" required /><div class="error-text"></div></div>
+      <div class="form-group"><label for="p-brand">Hãng *</label><input id="p-brand" type="text" required /><div class="error-text"></div></div>
+      <div class="form-group"><label for="p-image">Ảnh URL *</label><input id="p-image" type="url" required /><div class="error-text"></div></div>
+      <div class="form-group"><label for="p-quantity">Số lượng *</label><input id="p-quantity" type="number" min="0" required /><div class="error-text"></div></div>
+      <div class="form-actions"><button type="button" class="btn-cancel" id="product-cancel">Hủy</button><button type="submit" class="btn-save">Lưu sản phẩm</button></div>
+    </form>
+  </div>
+</div>
+
+<!-- Modal Form for Order Management -->
+<div class="modal-overlay" id="order-modal" style="display:none;">
+  <div class="modal-form" style="max-width:480px;">
+    <h2 id="order-modal-title">Tạo đơn hàng mới</h2>
+    <form id="order-form">
+      <div class="form-group"><label for="o-customer">Tên khách hàng *</label><input id="o-customer" type="text" required /><div class="error-text"></div></div>
+      <div class="form-group"><label for="o-email">Email *</label><input id="o-email" type="email" required /><div class="error-text"></div></div>
+      <div class="form-group"><label for="o-phone">Số điện thoại *</label><input id="o-phone" type="text" required /><div class="error-text"></div></div>
+      <div class="form-group"><label for="o-payment">Phương thức thanh toán *</label><select id="o-payment" required><option value="COD">COD</option><option value="ATM">ATM</option><option value="VC">Vận chuyển</option><option value="MOMO">MoMo</option></select><div class="error-text"></div></div>
+      <div class="form-group"><label for="o-items">Danh sách đơn (mỗi dòng mãSP*sl*đơn giá)</label><textarea id="o-items" rows="4" placeholder="iPhone-15-2-42990000\nGalaxy-S23-1-25490000"></textarea><div class="error-text"></div></div>
+      <div class="form-actions"><button type="button" class="btn-cancel" id="order-cancel">Hủy</button><button type="submit" class="btn-save">Lưu đơn</button></div>
+    </form>
+  </div>
+</div>
+
+<script src="data/product.js"></script>
 <script>
   const accountData = [
     {id: 1, avatar: 'https://i.pravatar.cc/40?img=12', username:'admin', email:'admin@shop36s.com', phone:'0912345678', addr:'Hà Nội', joined:'2024-03-01', status:'Activated'},
@@ -799,16 +819,294 @@
     renderAccountTable();
   }
 
-  const productData = [
-    {id: 1,img:'https://i.pravatar.cc/40?img=5', code:'SKU-001',name:'iPhone 15 128GB', brand:'Apple', os:'iOS', rate:'4.8', created:'2024-03-20', status:'Còn hàng'},
-    {id: 2,img:'https://i.pravatar.cc/40?img=6', code:'SKU-007',name:'Xiaomi 14 256GB', brand:'Xiaomi', os:'Android', rate:'4.6', created:'2024-06-01', status:'Còn hàng'},
-    {id: 3,img:'https://i.pravatar.cc/40?img=8', code:'SKU-019',name:'Samsung Galaxy Z Flip 5', brand:'Samsung', os:'Android', rate:'4.5', created:'2024-05-18', status:'Hết hàng'}
-  ];
+  let adminProducts = [];
 
-  const orderData = [
-    {id:1,code:'ORD-202403', account:'admin', name:'Trần Văn A', email:'a@example.com', phone:'0912345678', payment:'COD', created:'2025-01-03'},
-    {id:2,code:'ORD-202404', account:'manager', name:'Nguyễn Thị B', email:'b@example.com', phone:'0987123456', payment:'VC', created:'2025-01-05'}
-  ];
+  function initProducts() {
+    const storedProducts = localStorage.getItem('products');
+    if (storedProducts) {
+      try {
+        adminProducts = JSON.parse(storedProducts);
+      } catch (e) {
+        adminProducts = [];
+      }
+    }
+
+    if (!adminProducts || adminProducts.length === 0) {
+      if (window.products && Array.isArray(window.products)) {
+        adminProducts = JSON.parse(JSON.stringify(window.products));
+      } else {
+        adminProducts = [];
+      }
+    }
+
+    saveProducts();
+  }
+
+  function saveProducts() {
+    localStorage.setItem('products', JSON.stringify(adminProducts));
+  }
+
+  function getNextProductId() {
+    return adminProducts.length > 0 ? Math.max(...adminProducts.map((p) => p.id)) + 1 : 1;
+  }
+
+  let productSearchQuery = '';
+  let productFilterField = 'all';
+  let currentProductPage = 1;
+  const productsPerPage = 15;
+
+  function formatDate(date) {
+    const d = new Date(date);
+    const pad = (n) => String(n).padStart(2, '0');
+    return `${pad(d.getDate())}/${pad(d.getMonth() + 1)}/${d.getFullYear()} ${pad(d.getHours())}:${pad(d.getMinutes())}`;
+  }
+
+  function getFilteredProducts() {
+    const q = productSearchQuery.trim().toLowerCase();
+    if (!q) return adminProducts;
+    return adminProducts.filter((p) => {
+      const name = (p.name || '').toLowerCase();
+      const sku = (p.code || '').toLowerCase();
+      const brand = (p.brand || '').toLowerCase();
+
+      if (productFilterField === 'name') return name.includes(q);
+      if (productFilterField === 'code') return sku.includes(q);
+      if (productFilterField === 'brand') return brand.includes(q);
+      return name.includes(q) || sku.includes(q) || brand.includes(q);
+    });
+  }
+
+  function renderPagination(totalPages, currentPage) {
+    const container = document.getElementById('products-pagination');
+    if (!container) return;
+
+    container.innerHTML = '';
+    if (totalPages <= 1) return;
+
+    const createBtn = (text, disabled, onClick, active = false) => {
+      const btn = document.createElement('button');
+      btn.textContent = text;
+      btn.className = 'pagination-btn';
+      if (active) btn.classList.add('active');
+      if (disabled) btn.disabled = true;
+      btn.addEventListener('click', onClick);
+      return btn;
+    };
+
+    container.appendChild(createBtn('<< Prev', currentPage === 1, () => {
+      currentProductPage = Math.max(1, currentProductPage - 1);
+      renderProducts();
+    }));
+
+    for (let i = 1; i <= totalPages; i++) {
+      container.appendChild(createBtn(i, false, () => {
+        currentProductPage = i;
+        renderProducts();
+      }, i === currentPage));
+    }
+
+    container.appendChild(createBtn('Next >>', currentPage === totalPages, () => {
+      currentProductPage = Math.min(totalPages, currentProductPage + 1);
+      renderProducts();
+    }));
+  }
+
+  function renderProducts() {
+    const tbody = document.querySelector('#products-table tbody');
+    if (!tbody) return;
+
+    const filtered = getFilteredProducts();
+    const totalItems = filtered.length;
+    const totalPages = Math.max(1, Math.ceil(totalItems / productsPerPage));
+    currentProductPage = Math.min(currentProductPage, totalPages);
+
+    tbody.innerHTML = '';
+
+    if (totalItems === 0) {
+      const tr = document.createElement('tr');
+      tr.innerHTML = '<td colspan="8" style="text-align:center;">Không tìm thấy sản phẩm.</td>';
+      tbody.appendChild(tr);
+      renderPagination(0, 0);
+      return;
+    }
+
+    const start = (currentProductPage - 1) * productsPerPage;
+    const pageProducts = filtered.slice(start, start + productsPerPage);
+
+    pageProducts.forEach((p) => {
+      const status = (Number(p.quantity) > 0) ? 'Còn hàng' : 'Hết hàng';
+      const badgeClass = status === 'Còn hàng' ? 'badge stock' : 'badge soldout';
+      const row = document.createElement('tr');
+      row.innerHTML = `
+        <td>${p.id}</td>
+        <td><img src="${p.image || ''}" alt="${p.name || ''}" style="width:50px;height:50px;border-radius:8px;object-fit:cover;"/></td>
+        <td>${p.code || ''}</td>
+        <td>${p.name || ''}</td>
+        <td>${p.brand || ''}</td>
+        <td>${p.created ? formatDate(p.created) : ''}</td>
+        <td><span class="${badgeClass}">${status}</span></td>
+        <td class="action-buttons">
+          <button class="btn-edit-product" data-id="${p.id}" title="Sửa" style="border:none;background:transparent;cursor:pointer">✏️</button>
+          <button class="btn-delete-product" data-id="${p.id}" title="Xóa" style="border:none;background:transparent;cursor:pointer">🗑️</button>
+        </td>
+      `;
+      tbody.appendChild(row);
+    });
+
+    tbody.querySelectorAll('.btn-edit-product').forEach((btn) => {
+      btn.addEventListener('click', (e) => {
+        e.preventDefault();
+        const id = parseInt(btn.dataset.id, 10);
+        openProductModal(id);
+      });
+    });
+
+    tbody.querySelectorAll('.btn-delete-product').forEach((btn) => {
+      btn.addEventListener('click', (e) => {
+        e.preventDefault();
+        const id = parseInt(btn.dataset.id, 10);
+        deleteProduct(id);
+      });
+    });
+
+    renderPagination(totalPages, currentProductPage);
+  }
+
+  function loadProducts() {
+    initProducts();
+    renderProducts();
+  }
+
+  function addProduct() {
+    openProductModal();
+  }
+  let editingProductId = null;
+
+  function openProductModal(productId = null) {
+    const modal = document.getElementById('product-modal');
+    const title = document.getElementById('product-modal-title');
+    const form = document.getElementById('product-form');
+    if (!modal || !title || !form) return;
+
+    editingProductId = productId;
+    form.reset();
+    document.querySelectorAll('#product-form .error-text').forEach((el) => el.classList.remove('show'));
+
+    if (productId) {
+      const product = adminProducts.find((p) => p.id === productId);
+      if (!product) return;
+      title.textContent = 'Chỉnh sửa sản phẩm';
+      document.getElementById('p-name').value = product.name || '';
+      document.getElementById('p-sku').value = product.code || '';
+      document.getElementById('p-brand').value = product.brand || '';
+      document.getElementById('p-image').value = product.image || '';
+      document.getElementById('p-quantity').value = product.quantity != null ? product.quantity : 0;
+    } else {
+      title.textContent = 'Thêm sản phẩm mới';
+    }
+
+    modal.style.display = 'flex';
+  }
+
+  function closeProductModal() {
+    const modal = document.getElementById('product-modal');
+    if (modal) modal.style.display = 'none';
+    editingProductId = null;
+  }
+
+  function setStatusByQuantity(product) {
+    if ((Number(product.quantity) || 0) > 0) {
+      product.status = 'Còn hàng';
+    } else {
+      product.status = 'Hết hàng';
+    }
+  }
+
+  document.getElementById('product-form')?.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const name = document.getElementById('p-name').value.trim();
+    const code = document.getElementById('p-sku').value.trim();
+    const brand = document.getElementById('p-brand').value.trim();
+    const image = document.getElementById('p-image').value.trim();
+    const quantity = Number(document.getElementById('p-quantity').value);
+
+    if (!name || !code || !brand || !image || Number.isNaN(quantity)) {
+      if (!name) document.querySelector('#p-name + .error-text').textContent = 'Bắt buộc';
+      if (!code) document.querySelector('#p-sku + .error-text').textContent = 'Bắt buộc';
+      if (!brand) document.querySelector('#p-brand + .error-text').textContent = 'Bắt buộc';
+      if (!image) document.querySelector('#p-image + .error-text').textContent = 'Bắt buộc';
+      if (Number.isNaN(quantity)) document.querySelector('#p-quantity + .error-text').textContent = 'Số lượng không hợp lệ';
+      document.querySelectorAll('#product-form .error-text').forEach((el) => { if (el.textContent) el.classList.add('show'); });
+      return;
+    }
+
+    const now = new Date();
+    const created = now.toISOString();
+
+    if (editingProductId) {
+      const existing = adminProducts.find((p) => p.id === editingProductId);
+      if (existing) {
+        existing.name = name;
+        existing.code = code;
+        existing.brand = brand;
+        existing.image = image;
+        existing.quantity = quantity;
+        setStatusByQuantity(existing);
+      }
+    } else {
+      const newP = {
+        id: getNextProductId(),
+        name,
+        code,
+        brand,
+        image,
+        quantity,
+        created,
+        status: quantity > 0 ? 'Còn hàng' : 'Hết hàng'
+      };
+      adminProducts.push(newP);
+    }
+
+    saveProducts();
+    renderProducts();
+    closeProductModal();
+  });
+
+  function editProduct(id) {
+    openProductModal(id);
+  }
+
+  function deleteProduct(id) {
+    if (!confirm('Bạn có chắc muốn xóa không?')) return;
+    adminProducts = adminProducts.filter((p) => p.id !== id);
+    saveProducts();
+    renderProducts();
+  }
+
+  document.getElementById('product-cancel')?.addEventListener('click', closeProductModal);
+  document.getElementById('product-modal')?.addEventListener('click', (e) => {
+    if (e.target.id === 'product-modal') closeProductModal();
+  });
+
+  document.getElementById('new-product')?.addEventListener('click', () => openProductModal());
+  document.getElementById('refresh-products')?.addEventListener('click', () => {
+    productSearchQuery = '';
+    document.getElementById('product-search').value = '';
+    currentProductPage = 1;
+    renderProducts();
+  });
+
+  document.getElementById('product-search')?.addEventListener('input', (e) => {
+    productSearchQuery = e.target.value;
+    currentProductPage = 1;
+    renderProducts();
+  });
+
+  document.getElementById('product-filter-field')?.addEventListener('change', (e) => {
+    productFilterField = e.target.value;
+    currentProductPage = 1;
+    renderProducts();
+  });
 
   const salesData = {
     2024: {
@@ -855,13 +1153,122 @@
     localStorage.removeItem('authUser');
   }
 
+  let adminOrders = [];
+  let orderFilterStatus = 'all';
+  let orderSearchQuery = '';
+
+  function updateDashboardStats() {
+    document.getElementById('dashboard-users-count').textContent = accounts.length;
+    document.getElementById('dashboard-products-count').textContent = adminProducts.length;
+    document.getElementById('dashboard-orders-count').textContent = adminOrders.length;
+
+    const confirmedOrders = adminOrders.filter(o => o.status === 'Confirmed').length;
+    const deliveredOrders = adminOrders.filter(o => o.status === 'Delivered').length;
+    const totalStatusRevenue = adminOrders
+      .filter(o => o.status === 'Confirmed')
+      .reduce((sum, o) => sum + getOrderTotal(o), 0);
+    const totalStatusProfit = adminOrders
+      .filter(o => o.status === 'Confirmed')
+      .reduce((sum, o) => sum + getOrderProfit(o), 0);
+
+    document.getElementById('dashboard-confirmed-count').textContent = confirmedOrders;
+    document.getElementById('dashboard-delivered-count').textContent = deliveredOrders;
+    document.getElementById('dashboard-revenue-total').textContent = formatCurrency(totalStatusRevenue);
+    document.getElementById('dashboard-profit-total').textContent = formatCurrency(totalStatusProfit);
+
+    renderDashboardCharts();
+  }
+
+  function renderDashboardCharts() {
+    const year = Number(document.getElementById('sales-year')?.value || new Date().getFullYear());
+    const monthlyTotals = Array.from({ length: 12 }, () => 0);
+    adminOrders
+      .filter(o => o.status === 'Confirmed')
+      .forEach(o => {
+        const d = new Date(o.created);
+        if (!isNaN(d.getTime()) && d.getFullYear() === year) {
+          monthlyTotals[d.getMonth()] += getOrderTotal(o);
+        }
+      });
+
+    const maxVal = Math.max(...monthlyTotals, 1);
+    const points = monthlyTotals.map((val, i) => {
+      const x = 40 + (i * 32);
+      const y = 200 - (val / maxVal) * 160;
+      return `${x},${y}`;
+    });
+
+    const pointElements = points.map((pt, i) => {
+      const [x, y] = pt.split(',').map(Number);
+      return `<circle cx="${x}" cy="${y}" r="3" fill="#3498db"/>`;
+    }).join('');
+
+    const polylinePoints = points.join(' ');
+
+    const labelElements = Array.from({ length: 12 }, (_, i) => {
+      const x = 40 + (i * 32);
+      return `<text x="${x}" y="230" text-anchor="middle" font-size="9" fill="#999">${i + 1}</text>`;
+    }).join('');
+
+    const axis = `
+      <line x1="40" y1="40" x2="40" y2="200" stroke="#e5e7eb" stroke-width="2"/>
+      <line x1="40" y1="200" x2="380" y2="200" stroke="#e5e7eb" stroke-width="2"/>
+    `;
+
+    const dataFill = `
+      <polygon points="${polylinePoints} 380,200 40,200" fill="#5eb3d6" opacity="0.2" />
+      <polyline points="${polylinePoints}" fill="none" stroke="#3498db" stroke-width="2" />
+      ${pointElements}
+    `;
+
+    document.getElementById('dashboard-sales-axis').innerHTML = axis;
+    document.getElementById('dashboard-sales-data').innerHTML = dataFill;
+    document.getElementById('dashboard-sales-labels').innerHTML = labelElements;
+
+    const statusCounts = adminOrders.reduce((acc, o) => {
+      acc[o.status] = (acc[o.status] || 0) + 1;
+      return acc;
+    }, {});
+
+    const statusColors = {
+      Pending: '#f39c12',
+      Confirmed: '#3498db',
+      Shipping: '#9b59b6',
+      Delivered: '#2ecc71',
+      Cancelled: '#e74c3c'
+    };
+
+    const totalStatus = Object.values(statusCounts).reduce((a,b)=>a+b,0) || 1;
+    let statusOffset = 0;
+    const statusSegments = Object.keys(statusCounts).map(status => {
+      const count = statusCounts[status];
+      const pct = count / totalStatus;
+      const length = pct * (Math.PI * 2 * 60);
+      const arclength = length;
+      const dasharray = `${(arclength).toFixed(2)} ${(Math.PI * 2 * 60).toFixed(2)}`;
+      const offset = statusOffset;
+      statusOffset += arclength;
+      return `<circle cx="70" cy="100" r="60" fill="none" stroke="${statusColors[status]||'#777'}" stroke-width="20" transform="rotate(-90 70 100)" stroke-dasharray="${dasharray}" stroke-dashoffset="-${offset.toFixed(2)}"/>`;
+    }).join('');
+
+    const legendItems = Object.keys(statusCounts).map((status, idx) => {
+      const color = statusColors[status] || '#777';
+      return `<g transform="translate(160, ${25 + idx*20})"><circle cx="0" cy="0" r="4" fill="${color}"/><text x="10" y="4" font-size="10" fill="#333">${status} (${statusCounts[status]})</text></g>`;
+    }).join('');
+
+    document.getElementById('dashboard-status-segments').innerHTML = statusSegments;
+    document.getElementById('dashboard-status-legend').innerHTML = legendItems;
+  }
+
   function showAdminShell(){
     const adminShell = document.getElementById('admin-shell');
     if (adminShell) {
       adminShell.style.display = 'grid';
     }
     initAccounts();
-    loadAccounts(); loadProducts(); loadOrders(); loadSales();
+    initProducts();
+    initOrders();
+    loadAccounts(); loadProducts(); loadOrders(); updateDashboardStats(); loadSales();
   }
 
   if(!isAdminLoggedIn()){
@@ -910,56 +1317,506 @@
       btn.style.display=text.includes(term)?'block':'none';
     });
   });
-  function loadAccounts(){
-  initAccounts();
-  renderAccountTable();
-}
-  function loadProducts(){
-    const tbody=document.querySelector('#products-table tbody'); tbody.innerHTML='';
-    productData.forEach(p=>{const tr=document.createElement('tr');tr.innerHTML=`<td>${p.id}</td><td><img src="${p.img}"/></td><td>${p.code}</td><td><a href="#">${p.name}</a></td><td>${p.brand}</td><td>${p.os}</td><td>${p.rate}</td><td>${p.created}</td><td><span class="badge ${p.status==='Còn hàng'?'stock':'soldout'}">${p.status}</span></td><td class="action-buttons"><button title="Sửa">✏</button><button title="Xóa">🗑</button></td>`;tbody.appendChild(tr);});}
-  function loadOrders(){const tbody=document.querySelector('#orders-table tbody'); tbody.innerHTML=''; orderData.forEach(o=>{const tr=document.createElement('tr');tr.innerHTML=`<td>${o.id}</td><td>${o.code}</td><td><a href="#">${o.account}</a></td><td>${o.name}</td><td>${o.email}</td><td>${o.phone}</td><td>${o.payment}</td><td>${o.created}</td><td><button title="Xem">👁</button></td>`;tbody.appendChild(tr);});}
-  document.getElementById('order-search').addEventListener('input', (e)=>{const q=e.target.value.trim().toLowerCase();const tbody=document.querySelector('#orders-table tbody');tbody.innerHTML='';orderData.filter(o=>o.code.toLowerCase().includes(q)||o.name.toLowerCase().includes(q)||o.account.toLowerCase().includes(q)).forEach(o=>{const tr=document.createElement('tr');tr.innerHTML=`<td>${o.id}</td><td>${o.code}</td><td><a href="#">${o.account}</a></td><td>${o.name}</td><td>${o.email}</td><td>${o.phone}</td><td>${o.payment}</td><td>${o.created}</td><td><button title="Xem">👁</button></td>`;tbody.appendChild(tr);});});
 
-  function loadSales(){
-    const year = document.getElementById('sales-year').value || '2024';
-    const yearData = salesData[year] || {};
-    const monthData = yearData[3] || [];
-    
+  function loadAccounts(){
+    initAccounts();
+    renderAccountTable();
+  }
+
+  function loadOrders() {
+    initOrders();
+    renderOrders();
+  }
+
+  function openOrderModal() {
+    const modal = document.getElementById('order-modal');
+    const form = document.getElementById('order-form');
+    if (!modal || !form) return;
+    form.reset();
+    modal.style.display = 'flex';
+  }
+
+  function closeOrderModal() {
+    const modal = document.getElementById('order-modal');
+    if (!modal) return;
+    modal.style.display = 'none';
+  }
+
+  function parseOrderItems(text) {
+    const lines = text.split('\n').map(l => l.trim()).filter(Boolean);
+    const items = [];
+    for (const line of lines) {
+      // format: name-qty-unitPrice[-brand] hoặc mãSP-qty-unitPrice
+      const parts = line.split('-').map(p=>p.trim());
+      if (parts.length < 3) continue;
+
+      let name = parts[0];
+      let qty = Number(parts[1]);
+      let unitPrice = Number(parts[2]);
+      let brand = null;
+      let productId = null;
+
+      // Nếu nhập bằng mã sản phẩm (nếu dạng startsWith 'P' hoặc 'SKU') thì tìm adminProducts
+      if (adminProducts && adminProducts.length && parts.length === 3) {
+        const maybeProduct = adminProducts.find(p => p.code?.toLowerCase() === name.toLowerCase() || p.id?.toString() === name);
+        if (maybeProduct) {
+          productId = maybeProduct.id;
+          brand = maybeProduct.brand;
+          name = maybeProduct.name;
+          unitPrice = Number(unitPrice) || Number(maybeProduct.price) || Number(maybeProduct.unitPrice) || unitPrice;
+        }
+      }
+
+      if (parts.length >= 4) {
+        brand = parts[3] || brand;
+      }
+
+      if (!name || !qty || !unitPrice) continue;
+      items.push({productId, name, qty, unitPrice, cost: Math.round(unitPrice * 0.85), brand});
+    }
+    return items;
+  }
+
+  function addOrderFromForm() {
+    const customer = document.getElementById('o-customer').value.trim();
+    const email = document.getElementById('o-email').value.trim();
+    const phone = document.getElementById('o-phone').value.trim();
+    const payment = document.getElementById('o-payment').value;
+    const itemsText = document.getElementById('o-items').value.trim();
+
+    if (!customer || !email || !phone || !itemsText) {
+      alert('Vui lòng nhập đầy đủ thông tin đơn hàng.');
+      return;
+    }
+
+    const items = parseOrderItems(itemsText);
+    if (!items.length) {
+      alert('Vui lòng nhập ít nhất 1 sản phẩm hợp lệ.');
+      return;
+    }
+
+    const newOrder = {
+      id: getNextOrderId(),
+      code: `ORD-${new Date().getTime()}`,
+      account: 'admin',
+      customer,
+      email,
+      phone,
+      payment,
+      created: new Date().toISOString().split('T')[0],
+      status: 'Pending',
+      items
+    };
+
+    adminOrders.unshift(newOrder);
+    saveOrders();
+    renderOrders();
+    renderSales();
+    closeOrderModal();
+  }
+
+  function initOrders() {
+    const stored = localStorage.getItem('shop36_orders');
+    const defaultOrders = [
+      {id:1,code:'ORD-202501',account:'admin',customer:'Trần Văn A',email:'a@example.com',phone:'0912345678',payment:'COD',created:'2025-01-03',status:'Delivered',items:[{productId:1,name:'iPhone 15 Pro',qty:2,unitPrice:42990000,cost:39990000}]},
+      {id:2,code:'ORD-202502',account:'manager',customer:'Nguyễn Thị B',email:'b@example.com',phone:'0987123456',payment:'VC',created:'2025-01-05',status:'Shipping',items:[{productId:4,name:'Galaxy S23 Ultra',qty:1,unitPrice:25490000,cost:22490000}]},
+      {id:3,code:'ORD-202503',account:'sales01',customer:'Lê Thị C',email:'c@example.com',phone:'0977888999',payment:'ATM',created:'2025-01-10',status:'Pending',items:[{productId:2,name:'iPhone 15 Pro Max',qty:1,unitPrice:48990000,cost:44990000},{productId:7,name:'Samsung A54',qty:2,unitPrice:10490000,cost:8990000}]},
+      {id:4,code:'ORD-202504',account:'admin',customer:'Ngô Văn D',email:'d@example.com',phone:'0901234567',payment:'COD',created:'2025-01-15',status:'Confirmed',items:[{productId:3,name:'iPhone 15',qty:1,unitPrice:32990000,cost:29990000}]},
+      {id:5,code:'ORD-202505',account:'manager',customer:'Phạm Thị E',email:'e@example.com',phone:'0912345000',payment:'ATM',created:'2025-02-02',status:'Confirmed',items:[{productId:6,name:'Xiaomi 14',qty:2,unitPrice:14990000,cost:12990000}]},
+      {id:6,code:'ORD-202506',account:'sales01',customer:'Lưu Văn F',email:'f@example.com',phone:'0923456789',payment:'VC',created:'2025-02-11',status:'Cancelled',items:[{productId:8,name:'Samsung A54',qty:3,unitPrice:10490000,cost:8990000}]},
+      {id:7,code:'ORD-202507',account:'admin',customer:'Vũ Thị G',email:'g@example.com',phone:'0934567890',payment:'COD',created:'2025-03-01',status:'Confirmed',items:[{productId:10,name:'iPhone 14 Pro',qty:1,unitPrice:37990000,cost:34990000}]},
+      {id:8,code:'ORD-202508',account:'manager',customer:'Bùi Văn H',email:'h@example.com',phone:'0945678901',payment:'ATM',created:'2025-03-10',status:'Delivered',items:[{productId:5,name:'Samsung S23',qty:2,unitPrice:21990000,cost:18990000}]},
+      {id:9,code:'ORD-202509',account:'sales01',customer:'Đặng Thị I',email:'i@example.com',phone:'0956789012',payment:'VC',created:'2025-03-20',status:'Confirmed',items:[{productId:9,name:'Xiaomi 13',qty:1,unitPrice:12990000,cost:10990000}]},
+      {id:10,code:'ORD-202510',account:'admin',customer:'Trương Văn K',email:'k@example.com',phone:'0967890123',payment:'COD',created:'2025-04-01',status:'Pending',items:[{productId:11,name:'iPhone 15 Plus',qty:1,unitPrice:37990000,cost:34990000}]}
+    ];
+
+    if (stored) {
+      try {
+        adminOrders = JSON.parse(stored);
+      } catch (e) {
+        adminOrders = [];
+      }
+    }
+
+    if (!adminOrders || adminOrders.length === 0) {
+      adminOrders = [...defaultOrders];
+      saveOrders();
+      return;
+    }
+
+    // Nếu có data cũ nhưng dưới 10 bản ghi, cần bổ sung
+    if (adminOrders.length < defaultOrders.length) {
+      const existingIds = new Set(adminOrders.map(o => o.id));
+      defaultOrders.forEach(o => {
+        if (!existingIds.has(o.id)) {
+          adminOrders.push(o);
+        }
+      });
+    }
+
+    // Đảm bảo sắp ID tăng dần
+    adminOrders.sort((a, b) => a.id - b.id);
+    saveOrders();
+  }
+
+  function saveOrders() {
+    localStorage.setItem('shop36_orders', JSON.stringify(adminOrders));
+  }
+
+  function getNextOrderId() {
+    return adminOrders.length > 0 ? Math.max(...adminOrders.map((o) => o.id)) + 1 : 1;
+  }
+
+  function formatCurrency(num){
+    return new Intl.NumberFormat('vi-VN').format(num) + 'đ';
+  }
+
+  function getOrderTotal(order) {
+    return order.items.reduce((sum, item) => sum + (Number(item.qty) * Number(item.unitPrice)), 0);
+  }
+
+  function getOrderProfit(order) {
+    return order.items.reduce((sum, item) => sum + (Number(item.qty) * (Number(item.unitPrice) - Number(item.cost || 0))), 0);
+  }
+
+  function renderOrders() {
+    const tbody = document.querySelector('#orders-table tbody');
+    if (!tbody) return;
+
+    let filtered = adminOrders;
+    const q = orderSearchQuery.trim().toLowerCase();
+    if (q) {
+      filtered = filtered.filter(o =>
+        o.code.toLowerCase().includes(q) ||
+        o.customer.toLowerCase().includes(q) ||
+        o.email.toLowerCase().includes(q) ||
+        o.account.toLowerCase().includes(q) ||
+        o.phone.toLowerCase().includes(q)
+      );
+    }
+    if (orderFilterStatus !== 'all') {
+      filtered = filtered.filter(o => o.status === orderFilterStatus);
+    }
+
+    tbody.innerHTML = '';
+
+    if (filtered.length === 0) {
+      const tr = document.createElement('tr');
+      tr.innerHTML = '<td colspan="11" style="text-align:center;">Không tìm thấy đơn hàng.</td>';
+      tbody.appendChild(tr);
+      return;
+    }
+
+    filtered.forEach((order) => {
+      const total = getOrderTotal(order);
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td>${order.id}</td>
+        <td>${order.code}</td>
+        <td>${order.account}</td>
+        <td>${order.customer}</td>
+        <td>${order.email}</td>
+        <td>${order.phone}</td>
+        <td>${order.payment}</td>
+        <td>${order.created}</td>
+        <td><span class="badge ${order.status==='Delivered'?'active':order.status==='Cancelled'?'deactive':'badge'}">${order.status}</span></td>
+        <td>${formatCurrency(total)}</td>
+        <td class="action-buttons">
+          <button class="btn-order-view" data-id="${order.id}" title="Xem chi tiết" style="border:none;background:none;cursor:pointer">👁</button>
+          <select class="order-status-select" data-id="${order.id}" style="border:1px solid #ccc;border-radius:6px;padding:2px 6px;">
+            <option value="Pending" ${order.status==='Pending'?'selected':''}>Pending</option>
+            <option value="Confirmed" ${order.status==='Confirmed'?'selected':''}>Confirmed</option>
+            <option value="Shipping" ${order.status==='Shipping'?'selected':''}>Shipping</option>
+            <option value="Delivered" ${order.status==='Delivered'?'selected':''}>Delivered</option>
+            <option value="Cancelled" ${order.status==='Cancelled'?'selected':''}>Cancelled</option>
+          </select>
+        </td>
+      `;
+      tbody.appendChild(tr);
+    });
+
+    tbody.querySelectorAll('.btn-order-view').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const id = Number(btn.dataset.id);
+        const order = adminOrders.find(o => o.id === id);
+        if (!order) return;
+        const lines = order.items.map(i => `${i.name} x${i.qty} => ${formatCurrency(i.qty * i.unitPrice)}`).join('\n');
+        alert(
+          `Đơn ${order.code} (${order.status})\nKhách: ${order.customer} \nEmail: ${order.email} \nSĐT: ${order.phone}\nThanh toán: ${order.payment}\nTạo: ${order.created}\n\nDanh sách sản phẩm:\n${lines}\n\nTổng: ${formatCurrency(getOrderTotal(order))} \nLợi nhuận: ${formatCurrency(getOrderProfit(order))}`
+        );
+      });
+    });
+
+    tbody.querySelectorAll('.order-status-select').forEach(select => {
+      select.addEventListener('change', () => {
+        const id = Number(select.dataset.id);
+        const order = adminOrders.find(o => o.id === id);
+        if (!order) return;
+        order.status = select.value;
+        saveOrders();
+        renderOrders();
+        renderSales();
+      });
+    });
+
+    updateDashboardStats();
+  }
+
+  document.getElementById('new-order')?.addEventListener('click', () => {
+    openOrderModal();
+  });
+
+  document.getElementById('order-cancel')?.addEventListener('click', () => {
+    closeOrderModal();
+  });
+
+  document.getElementById('order-form')?.addEventListener('submit', (e) => {
+    e.preventDefault();
+    addOrderFromForm();
+  });
+
+  document.getElementById('order-search')?.addEventListener('input', (e) => {
+    orderSearchQuery = e.target.value;
+    renderOrders();
+  });
+
+  document.getElementById('order-status-filter')?.addEventListener('change', (e) => {
+    orderFilterStatus = e.target.value;
+    renderOrders();
+  });
+
+  function renderSales() {
+    const year = Number(document.getElementById('sales-year').value || new Date().getFullYear());
+    const month = Number(document.getElementById('sales-month').value || 0); // 0 là toàn năm
+
+    const allOrders = adminOrders.filter(o => {
+      const d = new Date(o.created);
+      if (isNaN(d.getTime())) return false;
+      if (d.getFullYear() !== year) return false;
+      if (month !== 0 && d.getMonth() + 1 !== month) return false;
+      return o.status === 'Confirmed';
+    });
+
+    const totalRevenue = allOrders.reduce((sum, o) => sum + getOrderTotal(o), 0);
+    const totalProfit = allOrders.reduce((sum, o) => sum + getOrderProfit(o), 0);
+    const totalOrders = allOrders.length;
+    const totalProducts = allOrders.reduce((sum, o) => sum + o.items.reduce((s,i)=>s+Number(i.qty),0), 0);
+
+    const salesRevenueDisplayEl = document.getElementById('sales-revenue-display');
+    if (salesRevenueDisplayEl) salesRevenueDisplayEl.innerText = formatCurrency(totalRevenue).replace('đ', '').trim();
+    const salesRevenueBottomEl = document.getElementById('sales-revenue-bottom');
+    if (salesRevenueBottomEl) salesRevenueBottomEl.innerText = formatCurrency(totalRevenue).replace('đ', '').trim();
+    const totalRevenueEl = document.getElementById('total-revenue');
+    if (totalRevenueEl) totalRevenueEl.innerText = formatCurrency(totalRevenue).replace('đ', '').trim();
+    const totalProfitEl = document.getElementById('total-profit');
+    if (totalProfitEl) totalProfitEl.innerText = formatCurrency(totalProfit).replace('đ', '').trim();
+
+    const statCards = document.querySelectorAll('.stat-card');
+    if (statCards && statCards[0]) statCards[0].querySelector('div').innerText = totalOrders;
+    if (statCards && statCards[1]) statCards[1].querySelector('div').innerText = totalProducts;
+
+    const monthLabel = month === 0 ? 'Cả năm' : `Tháng ${month}`;
+    document.querySelector('#sales-chart-title').innerText = `Biểu Đồ Kinh Doanh ${monthLabel} Năm ${year}`;
+    document.getElementById('sales-table-title').innerText = `Danh Sách Sản Phẩm Xuất Kho ${monthLabel} Năm ${year}`;
+
+    // Donut chart data logic
+    const targetOrders = 10;
+    const orderPct = totalOrders === 0 ? 0 : Math.min(100, Math.round((totalOrders / targetOrders) * 100));
+
+    const brandVolume = {};
+    const brandRevenue = {};
+    const brandProfit = {};
+    allOrders.forEach(o => {
+      o.items.forEach(item => {
+        let brand = item.brand || null;
+        if (!brand && item.productId) {
+          brand = adminProducts.find(p => p.id === item.productId)?.brand || null;
+        }
+        if (!brand && item.name) {
+          const found = adminProducts.find(p => p.name?.toLowerCase() === item.name.toLowerCase());
+          if (found) brand = found.brand;
+        }
+        brand = brand || 'Khác';
+
+        const qty = Number(item.qty) || 0;
+        const revenue = Number(item.qty) * Number(item.unitPrice);
+        const profit = Number(item.qty) * (Number(item.unitPrice) - Number(item.cost || 0));
+        brandVolume[brand] = (brandVolume[brand] || 0) + qty;
+        brandRevenue[brand] = (brandRevenue[brand] || 0) + revenue;
+        brandProfit[brand] = (brandProfit[brand] || 0) + profit;
+      });
+    });
+
+    const totalBrandVolume = Object.values(brandVolume).reduce((a, b) => a + b, 0);
+    const totalBrandRevenue = Object.values(brandRevenue).reduce((a, b) => a + b, 0);
+    const totalBrandProfit = Object.values(brandProfit).reduce((a, b) => a + b, 0);
+    const bestBrand = Object.keys(brandVolume).reduce((best, key) => {
+      if (!best) return key;
+      if ((brandVolume[key] || 0) > (brandVolume[best] || 0)) return key;
+      return best;
+    }, null);
+    const bestRevenueBrand = Object.keys(brandRevenue).reduce((best, key) => {
+      if (!best) return key;
+      if ((brandRevenue[key] || 0) > (brandRevenue[best] || 0)) return key;
+      return best;
+    }, null);
+    const bestProfitBrand = Object.keys(brandProfit).reduce((best, key) => {
+      if (!best) return key;
+      if ((brandProfit[key] || 0) > (brandProfit[best] || 0)) return key;
+      return best;
+    }, null);
+
+    const bestBrandVolumePct = totalBrandVolume ? Math.round(Math.max(...Object.values(brandVolume)) / totalBrandVolume * 100) : 0;
+    const bestBrandRevenuePct = totalBrandRevenue ? Math.round(Math.max(...Object.values(brandRevenue)) / totalBrandRevenue * 100) : 0;
+    const bestBrandProfitPct = totalBrandProfit ? Math.round(Math.max(...Object.values(brandProfit)) / totalBrandProfit * 100) : 0;
+
+    const colorPalette = ['#3498db', '#e74c3c', '#f1c40f', '#2ecc71', '#9b59b6', '#e67e22', '#1abc9c', '#34495e'];
+
+    const renderBrandDonut = (segmentGroupId, legendId, dataMap, total) => {
+      const segmentGroup = document.getElementById(segmentGroupId);
+      const legend = document.getElementById(legendId);
+      if (!segmentGroup || !legend) return;
+
+      segmentGroup.innerHTML = '';
+      legend.innerHTML = '';
+
+      if (!total || Object.keys(dataMap).length === 0) {
+        legend.innerHTML = '<div style="color:#999;">Không có dữ liệu</div>';
+        return;
+      }
+
+      const entries = Object.entries(dataMap)
+        .filter(([, value]) => value > 0)
+        .sort((a, b) => b[1] - a[1]);
+
+      if (entries.length === 0) {
+        centerLabel.textContent = 'Không có dữ liệu';
+        return;
+      }
+
+      let offset = 0;
+      entries.forEach(([brand, value], index) => {
+        const pct = Math.round((value / total) * 100);
+        const usedLength = (pct / 100) * 314;
+        const color = colorPalette[index % colorPalette.length];
+
+        const arc = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+        arc.setAttribute('cx', '100');
+        arc.setAttribute('cy', '100');
+        arc.setAttribute('r', '50');
+        arc.setAttribute('fill', 'none');
+        arc.setAttribute('stroke', color);
+        arc.setAttribute('stroke-width', '25');
+        arc.setAttribute('transform', 'rotate(-90 100 100)');
+        arc.setAttribute('stroke-dasharray', `${usedLength.toFixed(2)} 314`);
+        arc.setAttribute('stroke-dashoffset', `${offset.toFixed(2)}`);
+        segmentGroup.appendChild(arc);
+
+        const legendItem = document.createElement('div');
+        legendItem.style = 'display:flex;align-items:center;gap:8px;margin-bottom:4px;';
+        legendItem.innerHTML = `<span style="width:12px;height:12px;border-radius:50%;background:${color};display:inline-block;"></span>${brand} - ${pct}%`;
+        legend.appendChild(legendItem);
+
+        offset -= usedLength;
+      });
+    };
+
+    renderBrandDonut('chart-sales-brand-segments', 'chart-sales-brand-legend', brandVolume, totalBrandVolume);
+    renderBrandDonut('chart-sales-profit-segments', 'chart-sales-profit-legend', brandProfit, totalBrandProfit);
+
+    const chartSvg = document.getElementById('sales-trend-chart');
+    if (chartSvg) {
+      const totalsByDay = {};
+      allOrders.forEach(order => {
+        const d = new Date(order.created);
+        if (isNaN(d.getTime())) return;
+        const key = `${String(d.getDate()).padStart(2,'0')}/${String(d.getMonth()+1).padStart(2,'0')}`;
+        totalsByDay[key] = (totalsByDay[key] || 0) + getOrderTotal(order);
+      });
+
+      const points = [];
+      const labels = [];
+      const sortedDays = Object.keys(totalsByDay).sort((a,b)=> {
+        const [da,ma] = a.split('/').map(Number);
+        const [db,mb] = b.split('/').map(Number);
+        if (ma!==mb) return ma-mb;
+        return da-db;
+      });
+      const maxValue = sortedDays.length ? Math.max(...sortedDays.map(day=>totalsByDay[day])) : 1;
+      const chartW = 730;
+      const chartH = 220;
+
+      sortedDays.forEach((day, idx) => {
+        const x = 50 + (idx / Math.max(1, sortedDays.length -1)) * chartW;
+        const y = 260 - (totalsByDay[day] / maxValue) * (chartH - 30);
+        points.push(`${x},${y}`);
+        labels.push(`<text x="${x}" y="285" text-anchor="middle" font-size="10" fill="#999">${day}</text>`);
+      });
+
+      const shade = sortedDays.length ? `
+        <polygon points="${points.join(' ')} ${points[points.length-1].split(',')[0]},260 ${points[0].split(',')[0]},260" fill="#5eb3d6" opacity="0.15" />
+        <polyline points="${points.join(' ')}" stroke="#2980b9" stroke-width="3" fill="none"/>
+      ` : '<text x="400" y="150" text-anchor="middle" fill="#999">Không có dữ liệu</text>';
+
+      chartSvg.querySelector('#sales-chart-data').innerHTML = shade;
+      chartSvg.querySelector('#sales-chart-labels').innerHTML = labels.join('');
+    }
+
     const tbody = document.getElementById('sales-table-body');
     tbody.innerHTML = '';
-    
-    let totalRevenue = 0, totalProfit = 0;
-    
-    monthData.forEach((item, idx) => {
-      totalRevenue += item.revenue;
-      totalProfit += item.profit;
+
+    const productMap = {};
+    allOrders.forEach(o => {
+      o.items.forEach(item => {
+        const key = `${item.productId || item.name}_${item.unitPrice}`;
+        if (!productMap[key]) {
+          productMap[key] = {...item, quantity: 0, revenue: 0, profit: 0};
+        }
+        productMap[key].quantity += Number(item.qty);
+        productMap[key].revenue += Number(item.qty) * Number(item.unitPrice);
+        productMap[key].profit += Number(item.qty) * (Number(item.unitPrice) - Number(item.cost || 0));
+      });
+    });
+
+    const products = Object.values(productMap);
+    products.forEach((item, idx) => {
       const tr = document.createElement('tr');
       tr.innerHTML = `
         <td>${idx + 1}</td>
-        <td>${item.code}</td>
+        <td>${item.productId || '-'}</td>
         <td>${item.name}</td>
-        <td>${item.color}</td>
-        <td>${item.order}</td>
-        <td>${item.date}</td>
-        <td>${item.qty}</td>
-        <td style="color:#999;">${formatCurrency(item.priceIn)}</td>
-        <td style="color:#e74c3c;">${formatCurrency(item.priceOut)}</td>
+        <td>${item.color || '-'}</td>
+        <td>${item.order || '-'}</td>
+        <td>${allOrders.length > 0 ? allOrders[0].created : '-'}</td>
+        <td>${item.quantity}</td>
+        <td style="color:#999;">${formatCurrency(item.cost || 0)}</td>
+        <td style="color:#e74c3c;">${formatCurrency(item.unitPrice)}</td>
         <td style="color:#27ae60;font-weight:700;">${formatCurrency(item.revenue)}</td>
         <td style="color:#2980b9;font-weight:700;">${formatCurrency(item.profit)}</td>
       `;
       tbody.appendChild(tr);
     });
-    
-    document.getElementById('sales-revenue-display').innerText = formatCurrency(totalRevenue).replace('đ', '').trim();
-    document.getElementById('sales-revenue-bottom').innerText = formatCurrency(totalRevenue).replace('đ', '').trim();
-    document.getElementById('total-revenue').innerText = formatCurrency(totalRevenue).replace('đ', '').trim();
-    document.getElementById('total-profit').innerText = formatCurrency(totalProfit).replace('đ', '').trim();
-    
-    const chartTitle = document.getElementById('sales-chart-title');
-    chartTitle.innerText = `Biểu Độ Kinh Doanh Tháng 03 Năm ${year}`;
   }
 
+  function loadSales(){ renderSales(); }
+
+  const orderRefreshButton = document.getElementById('refresh-orders');
+  if (orderRefreshButton) orderRefreshButton.addEventListener('click', () => {
+    orderSearchQuery = '';
+    orderFilterStatus = 'all';
+    document.getElementById('order-search').value = '';
+    document.getElementById('order-status-filter').value = 'all';
+    renderOrders();
+  });
+
   const salesYearSelect = document.getElementById('sales-year');
+  if (salesYearSelect) {
+    salesYearSelect.addEventListener('change', renderSales);
+  }
+  const salesMonthSelect = document.getElementById('sales-month');
+  if (salesMonthSelect) {
+    salesMonthSelect.addEventListener('change', renderSales);
+  }
   if (salesYearSelect) {
     salesYearSelect.addEventListener('change', loadSales);
   }

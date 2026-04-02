@@ -1018,7 +1018,6 @@ const products = [
     installment: true,
     image: "img/banner/products/itel-s23-2.webp",
     brand: "itel",
-    id: "itel",
     categories: ['basic'],
     detail: {
       videoUrl: "https://www.youtube.com/embed/abc123",

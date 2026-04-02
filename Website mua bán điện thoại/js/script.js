@@ -302,7 +302,7 @@ document.addEventListener('DOMContentLoaded', () => {
   
   // Pagination state
   let currentPage = 1;
-  let itemsPerPage = 12;
+  let itemsPerPage = 50; // Hiển thị toàn bộ danh sách sản phẩm trong data/product.js
   let totalProducts = [];  // Store filtered products for pagination
 
   // ---------- Render ----------
